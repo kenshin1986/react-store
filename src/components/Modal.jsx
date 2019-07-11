@@ -25,7 +25,7 @@ export default class Modal extends Component {
                                                     text-center text-capitalize p-5" 
                                                 >
                                                 <h5> Item added to the cart</h5>
-                                                <img src={img} className="ing-fluid"
+                                                <img src={img} className="img-fluid"
                                                         alt="product" />
                                                     <h5> {title} </h5>
                                                     <h5 className="text-muted">
