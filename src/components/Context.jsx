@@ -140,7 +140,7 @@ export default class ProductProvider extends Component {
         const total = subTotal + tax;
         this.setState(() =>{
             return {
-                carSubtotal:subTotal,
+                cartSubtotal:subTotal,
                 cartTax:tax,
                 cartTotal: total,
             }
