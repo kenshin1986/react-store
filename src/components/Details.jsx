@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import {ProductConsumer} from './Context';
 import {Link} from 'react-router-dom';
 import {ButtonContainer} from './Button';
+import SlideDetails from './Slide/SlideDetails'
 
-class Details extends Component {
+export default class Details extends Component {
     render() {
         return (
             <ProductConsumer>
@@ -23,16 +24,14 @@ class Details extends Component {
                             <div className="row">
                                 <div className="col-10 mx-auto col-md-6 my-3
                                 text-capitalize">
-                                    <img src={img} className="img-fluid" alt="product"/>
+                                    <SlideDetails
+                                        id="mid2"
+                                        img= {img}
+
+                                    />
                                  </div>
-                                 <div className="col-10 mx-auto col-md-6 my-3
-                                text-capitalize">
-                                    <img src={img} className="img-fluid" alt="product"/>
-                                 </div>
-                                 <div className="col-10 mx-auto col-md-6 my-3
-                                text-capitalize">
-                                    <img src={img} className="img-fluid" alt="product"/>
-                                 </div>
+                                 
+                                 
                                  {/* product text */}
                                 <div className="col-10 mx-auto col-md-6 my-3
                                 text-capitalize">
@@ -84,4 +83,3 @@ class Details extends Component {
     }
 }
 
-export default Details;
