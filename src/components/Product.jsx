@@ -14,14 +14,15 @@ export default class Product extends Component {
                 <ProductConsumer>
                     {value => (
                         <div className="img-container p-5" 
-                        data-toggle="tooltip" title="Ver detalles del producto!"
                             onClick={()=> 
                                 value.handleDetail(id)
                             }
                         >
                         <Link to="/details">
-                            <img src={img} alt="product" className="card-img-top" 
-                             />
+                            <img src={img} alt="product" className="card-img-top"/>
+                            <span className="btn btn-outline-blue 
+                            text-capitalize text-muted"
+                            > ver detalles</span>
                         </Link>
                         <button className="cart-btn" 
                         disabled={ inCart ? true : false} 
