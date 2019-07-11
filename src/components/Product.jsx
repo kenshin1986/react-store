@@ -30,7 +30,7 @@ export default class Product extends Component {
                         {inCart ? (
                             <p className="text-capitalize mb-0" disabled>
                         {" "}
-                        in Cart</p>
+                        agregado</p>
                         ):(
                         <i className="fas fa-cart-plus"/>
                         )}
@@ -69,12 +69,12 @@ Product.proptype= {
 const ProductWrapper = styled.div`
     .card{
         border-color: transparent;
-        tansition:all 1s linear;
+        tansition:all 0s linear;
     }
     .card-footer{
         background: transparent;
         border-top: transparent;
-        transition: all 1s linear;
+        transition: all 0s linear;
     }
     &:hover{
         .card{
@@ -105,8 +105,8 @@ const ProductWrapper = styled.div`
         color: var(--mainWhite);
         font-size: 1.4rem;
         border-radius: 0.5rem 0 0 0; 
-        transform: translate(100%, 100%);
-        transition: all 1s linear;
+        /** transform: translate(100%, 100%);
+        transition: all 1s linear; **/
     }
     .img-container:hover .cart-btn{
         transform: translate(0, 0);
