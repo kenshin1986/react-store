@@ -19,28 +19,28 @@ const SlideResp =(props) =>(
     </ul>
 
     {/* <!-- The slideshow --> */}
-    <div className="carousel-inner">
+    <div className="carousel-inner ">
         <div className="carousel-item active">
-            <img src={slide01} alt="Los Angeles" width="1100" height="700"></img>
+            <img src={slide01} alt="Los Angeles" width="1417" height="427"></img>
             <div className="carousel-caption">
-                <h3 className="d-none d-sm-block">{props.titulo}</h3>
-                <p>{props.parrafo}</p>
+                {/* <h3 className="d-none d-sm-block">{props.titulo}</h3>
+                <p>{props.parrafo}</p> */}
                 <a href={props.link} className="btn btn-outline-light">Ver mas..</a>
             </div> 
         </div>
         <div className="carousel-item">
             <img src={slide02} alt="Chicago" width="1100" height="500"></img>
             <div className="carousel-caption">
-                <h3 className="d-none d-sm-block">{props.titulo}</h3>
-                <p>{props.parrafo}</p>
+                {/* <h3 className="d-none d-sm-block">{props.titulo}</h3>
+                <p>{props.parrafo}</p> */}
                 <a href={props.link} className="btn btn-outline-light">Ver mas..</a>
             </div> 
         </div>
         <div className="carousel-item">
             <img src={slide03} alt="New York" width="1100" height="500"></img>
             <div className="carousel-caption">
-                <h3 className="d-none d-sm-block">{props.titulo}</h3>
-                <p>{props.parrafo}</p>
+                {/* <h3 className="d-none d-sm-block">{props.titulo}</h3>
+                <p>{props.parrafo}</p> */}
                 <a href={props.link} className="btn btn-outline-light">Ver mas..</a>
             </div>  
         </div>

@@ -12,7 +12,7 @@ export default class ProductProvider extends Component {
     state = { 
         products: [],
         detailProduct:detailProduct,
-        cart: storeProducts,
+        cart: [],
         modalOpen: false, 
         modalProduct: detailProduct,
         cartSubTotal:0,

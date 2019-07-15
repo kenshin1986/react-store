@@ -1,11 +1,15 @@
 import React from 'react';
-import icono from '../img/icono.jpg';
+import { Link } from 'react-router-dom'
+import icono from '../img/icono.png';
 
 const Logo = () => (
    
-         <a className="navbar-brand" href="#top: ">
-              <img src={icono} className="rounded-circle img-fluid" alt="Cinque Terre"></img>
-          </a>
+    <Link to="/">
+        <img src={icono} className=" img-fluid " 
+        alt="Logo"></img>
+
+    </Link>
+          
 
 )
 

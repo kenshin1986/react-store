@@ -2,19 +2,24 @@ import React from 'react'
 
 const BotonBarraTop = (props) => (
         <React.Fragment>
-            <button type="button" 
-                    className="btn btn-primary mt-3" 
-                    data-toggle="collapse" 
-                    data-target="#demo">
-                       
-            </button>
-            <div id="demo" className="collapse">
-            <div class="card">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">Content</div> 
-                    <div class="card-footer">Footer</div>
-                    </div>
-            </div>
+            <div className="dropdown">
+                        <button type="button" 
+                        className="btn btn-outline-light  dropdown-toggle
+                                btn-xs-block 
+                                mr-xl-0 ml-xl-0
+                                mr-lg-0 ml-xl-0 
+                                mr-md-0" 
+                                type="button"
+                                data-toggle="dropdown">
+                        {props.botonpadre}
+                        </button>
+                        <div className="dropdown-menu">
+                                <a className="dropdown-item" href="#top">{props.boton1}</a>
+                                <a className="dropdown-item" href="#top">{props.boton2}</a>
+                                <a className="dropdown-item" href="#top">{props.boton3}</a>
+                        </div>
+                        </div>
+                      
         </React.Fragment>
 
     

@@ -32,7 +32,7 @@ export default class Modal extends Component {
                                                     <h5 className="text-muted">
                                                          precio : $ {price}
                                                     </h5>
-                                                    <Link to="/">
+                                                    <Link to="/ProductList">
                                                         <ButtonContainer onClick={()=>closeModal()}>
                                                             seguir comprando
                                                         </ButtonContainer>
