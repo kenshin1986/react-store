@@ -12,7 +12,7 @@ const ProductContext= React.createContext();
 export default class ProductProvider extends Component {
     state = { 
         products: [],
-        detailProduct:detailProduct,
+        detailProduct:detailProduct, //local storage
         cart: [],
         modalOpen: false, 
         modalProduct: detailProduct,
@@ -26,10 +26,9 @@ export default class ProductProvider extends Component {
      }
      setProducts = async () => {
         
-        const json = await axios.get(`http://192.168.1.62:3000/articulos`)
-        .catch(err=>{console.log(err)})
+        const json = await axios.get(`http://localhost/articulos`)
+        .catch(err=>{console.log(err)})        
         const array = json.data.articulos
-        console.log(array);
         
         let tempProducts =[];
         array.forEach(item =>{

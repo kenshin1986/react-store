@@ -19,7 +19,7 @@ class Navbar extends Component {
        this.obtenerDatosBtones();
    }
    obtenerDatosBtones =() => {
-        axios.get(`http://192.168.1.62:3000/agrupaciones`)
+        axios.get(`http://localhost/agrupaciones`)
     
         .then(res => {
 
@@ -71,12 +71,13 @@ class Navbar extends Component {
                                         <BtnProducts/>
                                     </li>
                                    { this.state.datos.map((dato, i)=>{
-                                       console.log('en el map '.dato)
+                                      
                                         return(
                                         <li className="nav-item 
-                                                    mt-2 mr-lg-2 key={i}">
+                                                    mt-2 mr-lg-2 " key={i}>
                                             <BotonBarraTop
-                                                  datos={dato}
+                                                 key={i}
+                                                 datos={dato}
                                                    
                                                    
                                             />
