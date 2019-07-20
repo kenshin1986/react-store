@@ -4,24 +4,47 @@ export default class Search extends Component {
    
     render() { 
         return ( 
-                <form className="busqueda" action="/action_page.php">
-                   <div className="input-group 
-                                    mr-xl-0 ml-xl-0
-                                        mr-lg-0 ml-xl-0
-                                        mr-md-0">
-                        <input className="form-control"    
-                                         type="text" 
-                                    placeholder="¿Que zapatos buscas?" required/>
-                            <div className="input-group-append">
-                                <input type="submit" value="Buscar"
-                                        className="btn btn-outline-light px-2 "/>
+                <React.Fragment>
+                <button type="button" className="btn btn-outline-light" 
+                        data-toggle="modal" data-target="#exampleModal">
+                        <i className="fas fa-search"></i>
+                </button>
+                <div className="modal fade" id="exampleModal" tabIndex="-1" 
+                        role="dialog" aria-labelledby="exampleModalLabel" 
+                            aria-hidden="true">
+                    <div className="modal-dialog" role="document bg-dark">
+                        <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">puedes buscar de la forma que quieras</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                            </button>
                         </div>
-                   </div>
-                    
-                    {/* <button className="btn btn-outline-light" type="submit">
-                            <i class="fas fa-search"></i>
-                    </button> */}
-                </form>
+                        <div className="modal-body bg-dark">
+                            <form className="busqueda" action="/action_page.php">
+                                <div className="input-group">
+                                        <input className="form-control"    
+                                                        type="text" 
+                                                    placeholder="¿Que zapatos buscas?" required/>
+                                            <div className="input-group-append">
+                                                <input type="submit" value="Buscar"
+                                                        className="btn btn-outline-light px-2 "/>
+                                        </div>
+                                </div>
+                                    
+                                    {/* <button className="btn btn-outline-light" type="submit">
+                                            <i class="fas fa-search"></i>
+                                    </button> */}
+                            </form>
+                        </div>
+                        {/* <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary">Save changes</button>
+                        </div> */}
+                        </div>
+                    </div>
+                </div>
+                </React.Fragment>
          );
     }
 }

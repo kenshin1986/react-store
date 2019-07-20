@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const Info = (props) => (
     
    <div className="container-fluid mt-5 mb-5 bg-dark"> 

@@ -3,6 +3,7 @@ import SlideMid from './Slide/SlideMid';
 import SlideBot from './Slide/SlideBot';
 import Info from './info.jsx';
 import SlideTop from './Slide/SlideTop';
+//import Ofert from './Ofert'
 
 function Home() {
   return (
@@ -12,6 +13,8 @@ function Home() {
       <SlideMid />
       <SlideBot/>
       <Info/>
+      {/* <Ofert/> */}
+      
        
     </React.Fragment>
   );

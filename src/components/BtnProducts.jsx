@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const BtnProducts = () => (
 
     <Link to="/ProductList">
-        <button className="btn btn-outline-light  btn-xs-block" type="button">
+        <button className="btn btn-outline-light  btn-block btn-lg-sm" type="button">
             Productos
         </button>
     </Link>
