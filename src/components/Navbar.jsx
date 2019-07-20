@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Switch, Route} from 'react-router-dom';
+//import {Switch, Route} from 'react-router-dom';
 import axios from 'axios'
 import Logo from './Logo';
 import BtnProducts from './BtnProducts'
@@ -8,7 +8,7 @@ import ModalIngreso from './ModalLogin'
 import ModalRegistro from './ModalRegistro'
 import { Link } from 'react-router-dom'
 import Search from './Search.jsx';
-import {datos} from './datos.json'
+//import {datos} from './datos.json'
 
 
 class Navbar extends Component {
@@ -71,21 +71,13 @@ class Navbar extends Component {
                                         <BtnProducts/>
                                     </li>
                                    { this.state.datos.map((dato, i)=>{
-                                       console.log(dato)
+                                       console.log('en el map '.dato)
                                         return(
                                         <li className="nav-item 
                                                     mt-2 mr-lg-2 key={i}">
                                             <BotonBarraTop
-                                                  
-                                                    botonpadre={dato.btnPadre}
-                                                    boton1={dato.linkName1}
-                                                    boton2={dato.linkName2}
-                                                    boton3={dato.linkName3}
-                                                    boton4={dato.linkName4}
-                                                    link1={dato.link1}
-                                                    link2={dato.link2}
-                                                    link3={dato.link3}
-                                                    link4={dato.link4}
+                                                  datos={dato}
+                                                   
                                                    
                                             />
                                          </li>

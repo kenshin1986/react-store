@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 export default class Product extends Component {
     render() {
-        const {id, title,  img, price, inCart} = this.props.product;
+        const {_id, nombre,  imagen, precio, inCart} = this.props.product;
         return (
             <ProductWrapper className="col-9 mx-auto col-md6 col-lg-3
                 my-3">
@@ -15,11 +15,11 @@ export default class Product extends Component {
                     {value => (
                         <div className="img-container p-5" 
                             onClick={()=> 
-                                value.handleDetail(id)
+                                value.handleDetail(_id)
                             }
                         >
                         <Link to="/details">
-                            <img src={img} alt="product" className="card-img-top"/>
+                            <img src={imagen} alt="product" className="card-img-top"/>
                             <span className="btn btn-outline-blue 
                             text-capitalize text-muted"
                             > ver detalles</span>
@@ -27,8 +27,8 @@ export default class Product extends Component {
                         <button className="cart-btn" 
                         disabled={ inCart ? true : false} 
                          onClick={()=>{
-                            value.addToCart(id);
-                            value.openModal(id);
+                            value.addToCart(_id);
+                            value.openModal(_id);
                         }}>
                         {inCart ? (
                             <p className="text-capitalize mb-0" disabled>
@@ -47,11 +47,11 @@ export default class Product extends Component {
                     <div className="card-footer d-flex
                         justify-content-between">
                             <p className="aling-self-center mb-0">
-                                {title}
+                                {nombre}
                             </p>
                             <h5 className="text-blue font-italic mb-0">
                                 <span className="mr-1">$</span>
-                                {price}
+                                {precio}
                             </h5>
                         </div>
               </div> 
@@ -61,10 +61,10 @@ export default class Product extends Component {
 }
 Product.proptype= {
         product:PropTypes.shape({
-            id:PropTypes.number,
-            img:PropTypes.string,
-            title:PropTypes.string,
-            price:PropTypes.number,
+            _id:PropTypes.number,
+            imagen:PropTypes.string,
+            nombre:PropTypes.string,
+            precio:PropTypes.number,
             inCart:PropTypes.bool
         }).isRequired
 }

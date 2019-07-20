@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import {storeProducts, detailProduct} from '../data';
 
@@ -23,9 +24,15 @@ export default class ProductProvider extends Component {
      componentDidMount(){
          this.setProducts();
      }
-     setProducts = () => {
-         let tempProducts =[];
-         storeProducts.forEach(item =>{
+     setProducts = async () => {
+        
+        const json = await axios.get(`http://192.168.1.62:3000/articulos`)
+        .catch(err=>{console.log(err)})
+        const array = json.data.articulos
+        console.log(array);
+        
+        let tempProducts =[];
+        array.forEach(item =>{
              const singleItem = {...item};
              tempProducts = [...tempProducts, singleItem];
          })
@@ -34,7 +41,7 @@ export default class ProductProvider extends Component {
          });
      };
      getItem = id =>{
-         const product = this.state.products.find(item => item.id === id);
+         const product = this.state.products.find(item => item._id === id);
          return product;
      }
      handleDetail = (id) =>{
@@ -49,8 +56,8 @@ export default class ProductProvider extends Component {
          const product = tempProducts[index];
          product.inCart = true;
          product.count = 1;
-         const price = product.price;
-         product.total = price;
+         const precio = product.precio;
+         product.total = precio;
          this.setState(()=>{
             return {products: tempProducts,
                     cart:[...this.state.cart,
@@ -75,25 +82,25 @@ export default class ProductProvider extends Component {
     }
     increment = (id) => {
         let tempCart = [...this.state.cart];
-        const selectedProduct = tempCart.find(item=>item.id ===id)
+        const selectedProduct = tempCart.find(item=>item._id ===id)
         const index = tempCart.indexOf(selectedProduct);
         const product = tempCart[index];
-        product.count = product.count +1 ;
-        product.total = product.count * product.price;
+        product.cantidad = product.cantidad +1 ;
+        product.total = product.cantidad * product.precio;
         this.setState(() =>{return{cart:[...tempCart]}
         },
         () =>{this.addTotals()})
     }
     decrement = (id) => {
         let tempCart = [...this.state.cart];
-        const selectedProduct = tempCart.find(item=>item.id ===id)
+        const selectedProduct = tempCart.find(item=>item._id ===id)
         const index = tempCart.indexOf(selectedProduct);
         const product = tempCart[index];
-        product.count = product.count - 1;
-        if(product.count === 0){
+        product.cantidad = product.cantidad - 1;
+        if(product.cantidad === 0){
             this.removeItem(id)
         }else{
-            product.total = product.count * product.price;
+            product.total = product.cantidad * product.precio;
             this.setState(
                 () =>{return{cart:[...tempCart]};
                 },
@@ -106,7 +113,7 @@ export default class ProductProvider extends Component {
     removeItem = (id) =>{
         let tempProducts = [...this.state.products];
         let tempCart = [...this.state.cart];
-        tempCart = tempCart.filter(item =>item.id !== id);
+        tempCart = tempCart.filter(item =>item._id !== id);
         const index = tempProducts.indexOf(this.getItem(id));
         let removedProduct = tempProducts[index];
         removedProduct.inCart =false;
@@ -135,9 +142,10 @@ export default class ProductProvider extends Component {
     addTotals = () =>{
         let subTotal = 0;
         this.state.cart.map(item =>(subTotal += item.total));
-        const tempTax = subTotal * 0.1;
+        const tempTax = subTotal * 0.19;
         const tax =parseFloat(tempTax.toFixed(2));
-        const total = subTotal + tax;
+        const total = subTotal ;
+        subTotal=total-tax;
         this.setState(() =>{
             return {
                 cartSubtotal:subTotal,
