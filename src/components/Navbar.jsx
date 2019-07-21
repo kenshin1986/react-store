@@ -19,7 +19,7 @@ class Navbar extends Component {
        this.obtenerDatosBtones();
    }
    obtenerDatosBtones =() => {
-        axios.get(`http://localhost/agrupaciones`)
+        axios.get(`http://localhost:3001/agrupaciones`)
     
         .then(res => {
 

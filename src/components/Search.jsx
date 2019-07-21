@@ -21,7 +21,7 @@ export default class Search extends Component {
                                         <input className="form-control"    
                                                         type="text" 
                                                         
-                                                    placeholder="¿Que Artículo buscas?" required autofocus/>
+                                                    placeholder="¿Que Artículo buscas?" required autoFocus/>
                                         <div className="input-group-append">
                                             <input type="submit" value="Buscar"
                                                 className="btn btn-outline-light px-2 "/>

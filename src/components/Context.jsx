@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import {storeProducts, detailProduct} from '../data';
-
-
-
 const ProductContext= React.createContext();
 //provider
 //consumer
@@ -12,21 +8,89 @@ const ProductContext= React.createContext();
 export default class ProductProvider extends Component {
     state = { 
         products: [],
-        detailProduct:detailProduct, //local storage
+        detailProduct:[], 
         cart: [],
         modalOpen: false, 
-        modalProduct: detailProduct,
+        modalProduct: [],
         cartSubTotal:0,
         cartTax: 0,
         cartTotal: 0
 
      };
      componentDidMount(){
-         this.setProducts();
-     }
+         if(this.state.products.length==0){
+            this.setProducts();
+        }
+         const detalles = localStorage.getItem('detailProduct');
+         const productos = localStorage.getItem('products');
+         if(detalles){
+             this.setState({
+                detailProduct: JSON.parse(detalles)
+             })
+         } 
+         if(productos){
+            const json = JSON.parse(productos)
+            this.setState({
+                products: json
+            })
+        }   
+
+        const carrito = localStorage.getItem('cart');
+        const impuesto = parseInt(localStorage.getItem('cartTax')); 
+        const carritoTotal = parseInt(localStorage.getItem('cartTotal'));
+        if(carrito){
+            if(impuesto && carritoTotal){
+                this.setState(() =>{
+                    return {
+                        cart: JSON.parse(carrito),
+                        cartTax: impuesto,
+                        cartTotal: carritoTotal,
+                        cartSubtotal: carritoTotal - impuesto
+                    }
+                })
+            }else{
+                this.setState(() =>{
+                    return {
+                        cart: [],
+                        cartTax: 0,
+                        cartTotal: 0,
+                        cartSubtotal: 0
+                    }
+                })
+            }
+        }
+  
+    }
+
+     componentDidUpdate(){
+
+        localStorage.setItem(
+            'products',
+            JSON.stringify(this.state.products)
+        )
+        localStorage.setItem(
+            'detailProduct',
+            JSON.stringify(this.state.detailProduct)
+        )
+        localStorage.setItem(
+            'cart',
+            JSON.stringify(this.state.cart)
+        )
+        localStorage.setItem(
+             'cartTax',
+          
+             JSON.stringify(this.state.cartTax)
+        )
+        localStorage.setItem(
+            'cartTotal',
+         
+            JSON.stringify(this.state.cartTotal)
+       )
+    }
+
+
      setProducts = async () => {
-        
-        const json = await axios.get(`http://localhost/articulos`)
+        const json = await axios.get(`http://localhost:3001/articulos`)
         .catch(err=>{console.log(err)})        
         const array = json.data.articulos
         
@@ -138,6 +202,22 @@ export default class ProductProvider extends Component {
         }
         )
     }
+
+    comprarCart = async() =>{
+        const carrito = localStorage.getItem('cart');
+        const cart= JSON.parse(carrito)
+     
+        const res = await axios.post(`http://localhost:3001/carrito`,cart)
+        console.log(res)
+        
+        this.setState(() =>{
+            return {cart}
+        },() =>{
+            this.setProducts();
+            this.addTotals();
+        }
+        )
+    }
     addTotals = () =>{
         let subTotal = 0;
         this.state.cart.map(item =>(subTotal += item.total));
@@ -164,7 +244,8 @@ export default class ProductProvider extends Component {
                 increment: this.increment,
                 decrement: this.decrement,
                 removeItem: this.removeItem,
-                clearCart: this.clearCart
+                clearCart: this.clearCart,
+                comprarCart: this.comprarCart
                 
             }}>
                 {this.props.children}

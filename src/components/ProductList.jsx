@@ -3,6 +3,7 @@ import Product from './Product'
 import Title from './Title'
 import {ProductConsumer} from './Context'
 
+
 export default class ProductList extends Component {
    
     render() {
@@ -11,7 +12,6 @@ export default class ProductList extends Component {
                 <div className="py-5">
                     <div className="container">
                     <Title className="our" title="productos" />
-
                         <div className="row">
                         <ProductConsumer>
                             {value=>{

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 
 
 export default function CartTotals ({value}) {
-   const{cartSubtotal, cartTax, cartTotal, clearCart} = value;
+   const{cartSubtotal, cartTax, cartTotal, clearCart, comprarCart} = value;
     return (
         <React.Fragment>
             <div className="container">
@@ -13,13 +13,20 @@ export default function CartTotals ({value}) {
                             col-sm-8 text-capitalize text-right">
                         <Link to="/ProductList">
                             <button className="btn btn-outline-danger text-uppercase
-                                mb-3 px-5" 
+                                mb-3 px-5 mr-2" 
                                 type="button"
                                 onClick={() => clearCart()}
                                 >
-                                    clear cart
+                                    Eliminar Articulos
                                 </button>
                         </Link>
+                        <button className="btn btn-outline-dark text-uppercase
+                                mb-3 px-5" 
+                                type="button"
+                                onClick={() => comprarCart()}
+                                >
+                                    Comprar
+                                </button>
                         <h5>
                             <span className="text-title">
                                 subtotal : 
@@ -35,6 +42,7 @@ export default function CartTotals ({value}) {
                                 total : 
                             </span> <strong>$ {cartTotal}</strong>
                         </h5>
+                        
                     </div>
                 </div>
             </div>
