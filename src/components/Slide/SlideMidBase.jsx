@@ -21,24 +21,18 @@ const SlideMedio =(props) =>(
         <div className="carousel-item active">
             <img src={slideMid01} alt="Los Angeles" width="750" height="480"></img>
             <div className="carousel-caption">
-                <h3 className="d-none d-sm-block">{props.titulo}</h3>
-                <p>{props.parrafo}</p>
                 <a href={props.link} className="btn btn-outline-light">Ver mas..</a>
             </div> 
         </div>
         <div className="carousel-item">
             <img src={slideMid02} alt="Chicago" width="750" height="480"></img>
             <div className="carousel-caption">
-                <h3 className="d-none d-sm-block">{props.titulo}</h3>
-                <p>{props.parrafo}</p>
                 <a href={props.link} className="btn btn-outline-light">Ver mas..</a>
             </div> 
         </div>
         <div className="carousel-item">
             <img src={slideMid03} alt="New York" width="750" height="480"></img>
             <div className="carousel-caption">
-                <h3 className="d-none d-sm-block">{props.titulo}</h3>
-                <p>{props.parrafo}</p>
                 <a href={props.link} className="btn btn-outline-light">Ver mas..</a>
             </div> 
         </div>

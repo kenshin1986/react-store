@@ -6,10 +6,9 @@ class ModalIngreso extends Component {
     render() { 
         return ( 
                 <React.Fragment>
-                    <button type="button" className="btn btn-outline-light btn-block" 
-                                        data-toggle="modal" data-target="#login">
+                    <a href="login" data-toggle="modal" data-target="#login">
                         Ingresar
-                    </button>
+                    </a>
                     {/* <!-- The Modal Login--> */}
                     <div className="modal" id="login">
                                     <div className="modal-dialog modal-sm">

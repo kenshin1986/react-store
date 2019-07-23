@@ -5,7 +5,7 @@ export default class Search extends Component {
     render() { 
         return ( 
                 <React.Fragment>
-                <button type="button" className="btn btn-outline-light" 
+                <button type="button"className="btn text-white" 
                         data-toggle="modal" data-target="#exampleModal">
                         <i className="fas fa-search"></i>
                 </button>
@@ -24,7 +24,7 @@ export default class Search extends Component {
                                                     placeholder="¿Que Artículo buscas?" required autoFocus/>
                                         <div className="input-group-append">
                                             <input type="submit" value="Buscar"
-                                                className="btn btn-outline-light px-2 "/>
+                                                className="btn btn-dark text-white px-2 "/>
                                         </div>
                                 </div>
                                     

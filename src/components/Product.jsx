@@ -12,12 +12,13 @@ export default class Product extends Component {
                 my-3">
               <div className="card" >
                 <ProductConsumer>
-                    {value => (
+                    {value => ( 
+                      
                         <div className="img-container p-5" 
                             onClick={()=> 
                                 value.handleDetail(_id)
                             }
-                        >
+                        >   
                         <Link to="/details">
                             <img src={imagen} alt="product" className="card-img-top"/>
                             <span className="btn btn-outline-blue 

@@ -11,8 +11,6 @@ export default class SlideMid extends Component {
                         ruta1: "ruta de una foto desde db.jpg",
                         ruta2: "ruta de una foto desde db.jpg",
                         ruta3: "ruta de una foto desde db.jpg",
-                        titulo: "aqui va la 1", 
-                        parrafo: "texto 1",
                         link: "#top" 
                     }
            
@@ -23,8 +21,6 @@ export default class SlideMid extends Component {
                 ruta1: "ruta de una foto desde db.jpg",
                 ruta2: "ruta de una foto desde db.jpg",
                 ruta3: "ruta de una foto desde db.jpg",
-                titulo: "aqui va la 2", 
-                parrafo: "texto 2",
                 link: "#top" 
             }
    
@@ -46,8 +42,6 @@ export default class SlideMid extends Component {
                             ruta1={f.ruta1}
                             ruta2={f.ruta2}
                             ruta3={f.ruta3}
-                            titulo={f.titulo}
-                            parrafo={f.parrafo}
                             link={f.link}
                         />
                     

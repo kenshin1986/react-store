@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/Navbar';
@@ -10,20 +10,24 @@ import Default from './components/Default';
 import Modal from './components/Modal'
 import Home from './components/Home'
 
+
 class App extends Component {
   render() {
     return (
-      <React.Fragment>
+     
+      <BrowserRouter>
         <Navbar />
-        <Switch>
+         <Switch>
           <Route exact path="/" component={Home}/>
           <Route exact path="/ProductList" component={ProductList}/>
           <Route path="/details" component={Details}/>
           <Route path="/cart" component={Cart}/>
+          <Route path="/agrupaciones/*" component={ProductList}/>
           <Route  component={Default}/>
-        </Switch>
+        </Switch> 
         <Modal/>
-      </React.Fragment>
+        </BrowserRouter>
+     
     );
   }
 

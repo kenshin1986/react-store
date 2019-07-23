@@ -28,7 +28,7 @@ class Registro extends Component {
 											id="inputCorreo" 
 											className="form-control" 
 											placeholder="Ej- mundo@gmail.com " 
-											required autoFocus
+											required 
 											ref={this.input1}	
 											/>
 					                <label htmlFor="inputCorreo">Correo Electronico</label>

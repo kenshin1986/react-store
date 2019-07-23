@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+
 class BotonBarraTop extends Component {
         state = {  }
         render() { 
@@ -7,16 +8,12 @@ class BotonBarraTop extends Component {
                 return ( 
                         <React.Fragment>
                                 <div className="dropdown">
-                                        <button type="button" 
-                                                className="btn btn-outline-light  dropdown-toggle
-                                                        btn-block 
-                                                        mr-xl-0 ml-xl-0
-                                                        mr-lg-0 ml-xl-0 
-                                                        mr-md-0" 
+                                        <a href="dropdown-menu"
+                                                className="boton-desplegable dropdown-toggle " 
                                                         
                                                         data-toggle="dropdown">
                                                 {datos.btnPadre}
-                                        </button>
+                                        </a>
                                         <div className="dropdown-menu">
                                                         <a className="dropdown-item" href={datos.link1}>{datos.linkName1}</a>
                                                         <a className="dropdown-item" href={datos.link2}>{datos.linkName2}</a>

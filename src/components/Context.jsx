@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
+
+// creamos el context
 const ProductContext= React.createContext();
-//provider
-//consumer
+// contiene 2 metodos
+// provider se usara para pasar los datos, estados, funciones, etc
+// consumer se aplica en la clase donde se van a usar esos datos
+// se debe de importar el ProductContext en la clase a usar el provider
 
 export default class ProductProvider extends Component {
     state = { 
@@ -14,11 +18,12 @@ export default class ProductProvider extends Component {
         modalProduct: [],
         cartSubTotal:0,
         cartTax: 0,
-        cartTotal: 0
+        cartTotal: 0,
+       
 
      };
      componentDidMount(){
-         if(this.state.products.length==0){
+         if(this.state.products.length===0){
             this.setProducts();
         }
          const detalles = localStorage.getItem('detailProduct');
@@ -39,6 +44,7 @@ export default class ProductProvider extends Component {
         const impuesto = parseInt(localStorage.getItem('cartTax')); 
         const carritoTotal = parseInt(localStorage.getItem('cartTotal'));
         if(carrito){
+          
             if(impuesto && carritoTotal){
                 this.setState(() =>{
                     return {
@@ -74,6 +80,7 @@ export default class ProductProvider extends Component {
         )
         localStorage.setItem(
             'cart',
+            
             JSON.stringify(this.state.cart)
         )
         localStorage.setItem(
@@ -113,10 +120,12 @@ export default class ProductProvider extends Component {
              return {detailProduct:product}   
          })
      }
+    
      addToCart = (id) =>{
          let tempProducts =[...this.state.products];
          const index = tempProducts.indexOf(this.getItem(id));
          const product = tempProducts[index];
+        
          product.inCart = true;
          product.count = 1;
          const precio = product.precio;
@@ -124,7 +133,7 @@ export default class ProductProvider extends Component {
          this.setState(()=>{
             return {products: tempProducts,
                     cart:[...this.state.cart,
-                    product] };
+                    product]};
          },
          () =>{
              this.addTotals();
@@ -193,7 +202,7 @@ export default class ProductProvider extends Component {
         }
         )
     }
-    clearCart = (id) =>{
+    clearCart = () =>{
         this.setState(() =>{
             return {cart:[]}
         },() =>{
@@ -206,21 +215,39 @@ export default class ProductProvider extends Component {
     comprarCart = async() =>{
         const carrito = localStorage.getItem('cart');
         const cart= JSON.parse(carrito)
-     
-        const res = await axios.post(`http://localhost:3001/carrito`,cart)
-        console.log(res)
+        const res = await axios.post('http://localhost:3001/carrito',cart)
         
-        this.setState(() =>{
-            return {cart}
-        },() =>{
-            this.setProducts();
-            this.addTotals();
-        }
-        )
+        if(res.data.res){
+            
+            /**
+             * valida que el total a pagar en el cliente sea igual al total calculado desde el server
+             */
+           if(res.data.total){
+               if(this.state.cartTotal === res.data.total){
+
+                //aca va la redireccion, si el usuario no esta registrado abre formulario,
+                //muestra al usuario el resumen del pedido y confirma el medio de pago
+                    this.setState(() =>{
+                    return {cart:[]}
+                    },() =>{
+                        this.setProducts();
+                        this.addTotals();
+                    })
+                }else{
+                    console.log("Error al validar los totales");
+                    
+                }
+           }
+           
+           
+        }    
+        
     }
+    
     addTotals = () =>{
         let subTotal = 0;
         this.state.cart.map(item =>(subTotal += item.total));
+        
         const tempTax = subTotal * 0.19;
         const tax =parseFloat(tempTax.toFixed(2));
         const total = subTotal ;
@@ -245,8 +272,9 @@ export default class ProductProvider extends Component {
                 decrement: this.decrement,
                 removeItem: this.removeItem,
                 clearCart: this.clearCart,
-                comprarCart: this.comprarCart
-                
+                comprarCart: this.comprarCart,
+               
+               
             }}>
                 {this.props.children}
             </ProductContext.Provider>

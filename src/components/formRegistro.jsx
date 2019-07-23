@@ -12,7 +12,6 @@ class Ingreso extends Component {
         this.input4 = React.createRef();
         this.input5 = React.createRef();
         
-        
 		
 	  }
 	  

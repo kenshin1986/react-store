@@ -5,7 +5,7 @@ import icono from '../img/icono.png';
 const Logo = () => (
    
     <Link to="/">
-        <img src={icono} className=" img-fluid 
+        <img src={icono} className=" img-fluid mt-lg-0
                                     navbar-brand"
         alt="Logo"></img>
 

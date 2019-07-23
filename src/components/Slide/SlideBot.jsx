@@ -22,7 +22,7 @@ export default class SlideBot extends Component {
     }
     render() {
         return (
-            <div className="container-fluid  mt-5 mr-0 mb-5 ml-0">
+            <div className="mt-5 mr-0 mb-5 ml-0">
             
              {this.state.slideBot.map(f => (
                   

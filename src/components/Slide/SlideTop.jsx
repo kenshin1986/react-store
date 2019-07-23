@@ -23,7 +23,7 @@ export default class SlideTop extends Component {
     
     render() {
         return (
-            <div className="slide-Top mt-1">
+            <div className=" mt-1">
                 {this.state.slideTop.map(f => (
                   
                   <SlideBase
