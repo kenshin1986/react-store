@@ -1,12 +1,54 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
+import Swal from 'sweetalert2'
 
+class CartTotals extends Component {
+    aviso = () =>{ 
+        const {cartSubtotal, cartTax, cartTotal, clearCart, comprarCart, reset} = this.props.value;
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: 'btn btn-success',
+              cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false,
+          })
+          
+          swalWithBootstrapButtons.fire({
+            title: ' Vaciar El Carrito?',
+            text: "Perdera Su Lista De Productos!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, Vaciar!',
+            cancelButtonText: 'No, cancelar!',
+            reverseButtons: true
+          }).then((result) => {
+            if (result.value) {
+                clearCart()
+                reset()
+                swalWithBootstrapButtons.fire(
+                'Vaciado!',
+                'Tu Lista Ha Sido Eliminada.',
+                'success'
+               
+              )
+            } else if (
+              // Read more about handling dismissals
+              result.dismiss === Swal.DismissReason.cancel
+            ) {
+              swalWithBootstrapButtons.fire(
+                'Cancelado',
+                'Tu Lista Esta Intacta :)',
+                'error'
+              )
+            }
+          })
+    }
+    render() { 
+        const {cartSubtotal, cartTax, cartTotal, clearCart, comprarCart, reset} = this.props.value;
 
-
-export default function CartTotals ({value}) {
-   const{cartSubtotal, cartTax, cartTotal, clearCart, comprarCart} = value;
-    return (
-        <React.Fragment>
+        return (  
+            
+            <React.Fragment>
             <div className="container">
                 <div className="row">
                     <div className="col-10 mt-2 ml-sm-5 ml-md-auto
@@ -15,7 +57,7 @@ export default function CartTotals ({value}) {
                             <button className="btn btn-outline-danger text-uppercase
                                 mb-3 px-5 mr-2" 
                                 type="button"
-                                onClick={() => clearCart()}
+                                onClick={() => {aviso()}}
                                 >
                                     Eliminar Articulos
                                 </button>
@@ -47,5 +89,10 @@ export default function CartTotals ({value}) {
                 </div>
             </div>
         </React.Fragment>
-    )
+
+        );
+    }
 }
+ 
+export default CartTotals;
+

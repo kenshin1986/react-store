@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 
 
-class Registro extends Component {
-	constructor(props) {
-		super(props);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.input2 = React.createRef();
-		this.input1 = React.createRef();
-		
-	  }
+export default class FormIngreso   extends Component {
+
 	  
+	  handleSubmit = this.handleSubmit.bind(this);
+		  userRef = React.createRef();
+		  passRef = React.createRef();
+		
+	 obtenerDatos = (e) => {
+        e.preventDefault();
+        const datos = { user: this.userRef.current.value,
+	                    pass: this.passRef.current.value 
+					}
+       this.props.login(datos);
+    }
 	  handleSubmit(event) {
 		
 		event.preventDefault();
@@ -21,15 +26,15 @@ class Registro extends Component {
 					      <div className="col-sm-12 col-md-12  col-lg-12 mx-auto">
 					        <div className="card card-signin my-5">
 					          <div className="card-body">
-					            <h5 className="card-title text-center">Sign In</h5>
-					            <form className="form-signin" onSubmit={this.handleSubmit}>
+					            <h5 className="card-title text-center">Ingresar</h5>
+					            <form className="form-signin" onSubmit={this.obtenerDatos}>
 					              <div className="form-label-group">
 					                <input type="email" 
 											id="inputCorreo" 
 											className="form-control" 
 											placeholder="Ej- mundo@gmail.com " 
 											required 
-											ref={this.input1}	
+											ref={this.userRef}	
 											/>
 					                <label htmlFor="inputCorreo">Correo Electronico</label>
 					              </div>
@@ -40,7 +45,7 @@ class Registro extends Component {
 											className="form-control" 
 											placeholder="Contraseña" 
 											required
-											ref={this.input2}
+											ref={this.passRef}
 											/>
 					                <label htmlFor="inputPass">Contraseña</label>
 					              </div>
@@ -61,4 +66,3 @@ class Registro extends Component {
     }
 }
 
-export default Registro

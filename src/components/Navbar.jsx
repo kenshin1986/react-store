@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import Logo from './Logo';
 import BotonBarraTop from './BotonBarraTop';
-import ModalIngreso from './ModalLogin'
-import ModalRegistro from './ModalRegistro'
-import Search from './Search.jsx';
 import CartContador from './Cart/CartContador'
 import './navbar.css';
 import { Link } from 'react-router-dom'
+import { ProductConsumer } from './Context'
 
 
 
@@ -22,8 +20,6 @@ class Navbar extends Component {
         axios.get(`http://localhost:3001/agrupaciones`)
     
         .then(res => {
-
-           console.log(res.data)
             this.setState({
                datos: res.data.agrupaciones
             })
@@ -32,21 +28,27 @@ class Navbar extends Component {
 
     render() {
         return (
-            <nav  className="navbar navbar-dark bg-dark navbar-expand-md">
+            <nav  className="navbar navbar-dark bg-dark navbar-expand-md fixed-top mt-0 mb-5 pb-0 pt-0">
                 <div className="row m-0  ">  {/*   inicio primera columna */}
-                    <div className="col-12 col-md-4 col-lg-8 col-xl-2 ">
+                    <div className="col-12 col-md-4 col-lg-7  ">
                         <ul className="navbar-nav ">
                             <li className="nav-item" >
                                 <div className="row m-0 ">
                                     <div className="col-7 col-md-7 ">
-                                        
-                                            <Logo />
-                                       
+                                       <Logo />
                                     </div>
                                     <div className="col-3 mt-1 order-md-2">
-                                        
-                                             <Search />
-                                       
+                                    <ProductConsumer>
+                                        { ( value) => (
+                                                <button type="button" className="btn text-white"
+                                                    data-toggle="modal" data-target="#exampleModal"
+                                                     onClick={()=>{
+                                                           value.abrirBusqueda();
+                                                         }}>
+                                                    <i className="fas fa-search" />
+                                                </button>
+                                         )}
+                                    </ProductConsumer>
                                     </div>
                                     <div className="col-1 order-md-1">
                                         <button type="button" className=" navbar-toggler "
@@ -58,19 +60,15 @@ class Navbar extends Component {
                                     </div>
                                 </div>
                             </li>
-                            
-                            
                         </ul>
                     </div>     {/*   termina La primera columna */}
-                    <div className="col-12 col-md-8 mt-md-2 col-lg-4 col-xl-10 ">  {/*   inicio segunda columna */}
+                    <div className="col-12 col-md-8 mt-md-2 col-lg-5  ">  {/*   inicio segunda columna */}
                         <div className="collapse navbar-collapse" id="menu-principal">
                             <ul className="navbar-nav  ">
                                 <li className="nav-item">
-                                <Link to="/ProductList">
-                                Productos
-                                </Link>
-                                    
-                                   
+                                    <Link to="/ProductList">
+                                        Productos
+                                    </Link>
                                 </li>
                                 { this.state.datos.map((dato, i)=>{
                                      return(
@@ -84,23 +82,37 @@ class Navbar extends Component {
                                      )  
                                   })}
                                 <li className="nav-item">
-                                  
-                                        <ModalIngreso/>
-                                   
+                                <ProductConsumer>
+                                        { ( value) => (
+                                            <a href="login" data-toggle="modal" data-target="#login" 
+                                                onClick={()=>{
+                                                           value.abrirLogin();
+                                                         }}>
+                                                Ingresar
+                                            </a>
+                                               
+                                         )}
+                                    </ProductConsumer>
+                                    
                                 </li>
                                 <li className="nav-item">
-                                    
-                                        <ModalRegistro/>
-                                   
-                                </li>
+                                <ProductConsumer>
+                                        { ( value) => (
+                                            <a href="registro" data-toggle="modal" data-target="#registro"
+                                                onClick={()=>{
+                                                    value.abrirRegistro();
+                                                         }}>
+                                                Registrarse
+                                            </a>
+                                               
+                                         )}
+                                    </ProductConsumer>
+                               </li>
                                 <li className="nav-item">
-                                    
                                         <CartContador/>
-                                    
                                 </li>
                             </ul>
                         </div>
-                       
                     </div> {/*   fin segunda columna */}
                 </div>
                

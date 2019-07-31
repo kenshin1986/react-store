@@ -9,6 +9,10 @@ import Cart from './components/Cart';
 import Default from './components/Default';
 import Modal from './components/Modal'
 import Home from './components/Home'
+import Info from '../src/components/info';
+import Search from './components/Search'
+import ModalLogin from './components/ModalLogin'
+import ModalRegistro from './components/ModalRegistro'
 
 
 class App extends Component {
@@ -22,10 +26,14 @@ class App extends Component {
           <Route exact path="/ProductList" component={ProductList}/>
           <Route path="/details" component={Details}/>
           <Route path="/cart" component={Cart}/>
-          <Route path="/agrupaciones/*" component={ProductList}/>
+          <Route path="/agrupaciones/*" component={ProductList}/> 
           <Route  component={Default}/>
         </Switch> 
+        <Info/>
         <Modal/>
+        <Search/>
+        <ModalLogin/>
+        <ModalRegistro/>
         </BrowserRouter>
      
     );

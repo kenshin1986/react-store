@@ -1,36 +1,42 @@
 import React, { Component } from 'react';
-import Registro from './formRegistro';
+import { ProductConsumer } from './Context';
+import FormRegistro from './FormRegistro';
 
-class ModalRegistro extends Component {
-    
-    render() { 
+export default class ModalRegistro extends Component {
+    busquedaRef = React.createRef();
+   
+    render() {
         return (
-            <React.Fragment>
-                    <a href="registro" data-toggle="modal" data-target="#registro">
-                     Registrarse
-                    </a>
-                 {/* <!-- The Modal Login--> */}
-                        <div className="modal" id="registro">
-                                <div className="modal-dialog modal-md">
-                                    <div className="modal-content">
-                                        {/* <!-- Modal Header --> */}
-                                        <div className="modal-header ">
-                                            <button type="button" className="close" data-dismiss="modal">&times;</button>
+            <ProductConsumer>
+                {(value) => {
+                    const { modalRegistroOpen } = value;
+                       if (!modalRegistroOpen){
+                            return null;
+                        } else {    
+                           return(
+                            <React.Fragment>
+                            {/* <!-- The Modal Login--> */}
+                                <div className="modal" id="registro">
+                                    <div className="modal-dialog modal-md">
+                                        <div className="modal-content">
+                                            {/* <!-- Modal Header --> */}
+                                            <div className="modal-header ">
+                                                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            {/* <!-- Modal body --> */}
+                                            <div className="modal-body bg-dark">
+                                                <FormRegistro />
+                                            </div>
                                         </div>
-                                        {/* <!-- Modal body --> */}
-                                        <div className="modal-body bg-dark">
-                                            <Registro />
-                                        </div>
-                                        {/* <!-- Modal footer --> */}
-                                        {/* <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
-                                </div> */}
                                     </div>
                                 </div>
-                            </div>
-            </React.Fragment>
-          );
+                            </React.Fragment>
+                           ); 
+                        }
+                    }
+
+                }
+            </ProductConsumer>
+        );
     }
 }
- 
-export default ModalRegistro;

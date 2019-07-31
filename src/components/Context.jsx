@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 
 // creamos el context
@@ -14,11 +15,18 @@ export default class ProductProvider extends Component {
         products: [],
         detailProduct:[], 
         cart: [],
+        datosUser: [],
         modalOpen: false, 
         modalProduct: [],
+        modalBusquedaOpen: true,
+        modalLoginOpen: true,
+        modalRegistroOpen: true,
+        userLoginState: false,
         cartSubTotal:0,
         cartTax: 0,
         cartTotal: 0,
+        cantidad:0,
+        termino: '',
        
 
      };
@@ -43,6 +51,7 @@ export default class ProductProvider extends Component {
         const carrito = localStorage.getItem('cart');
         const impuesto = parseInt(localStorage.getItem('cartTax')); 
         const carritoTotal = parseInt(localStorage.getItem('cartTotal'));
+        const contador = parseInt(localStorage.getItem('contador'));
         if(carrito){
           
             if(impuesto && carritoTotal){
@@ -51,7 +60,8 @@ export default class ProductProvider extends Component {
                         cart: JSON.parse(carrito),
                         cartTax: impuesto,
                         cartTotal: carritoTotal,
-                        cartSubtotal: carritoTotal - impuesto
+                        cartSubtotal: carritoTotal - impuesto,
+                        cantidad: contador
                     }
                 })
             }else{
@@ -67,12 +77,16 @@ export default class ProductProvider extends Component {
         }
   
     }
-
+        
      componentDidUpdate(){
 
         localStorage.setItem(
             'products',
             JSON.stringify(this.state.products)
+        )
+        localStorage.setItem(
+            'contador',
+            JSON.stringify(this.state.cantidad)
         )
         localStorage.setItem(
             'detailProduct',
@@ -96,20 +110,67 @@ export default class ProductProvider extends Component {
     }
 
 
-     setProducts = async () => {
-        const json = await axios.get(`http://localhost:3001/articulos`)
-        .catch(err=>{console.log(err)})        
-        const array = json.data.articulos
-        
-        let tempProducts =[];
-        array.forEach(item =>{
-             const singleItem = {...item};
-             tempProducts = [...tempProducts, singleItem];
-         })
-         this.setState( () => {
-             return {products:tempProducts}
-         });
-     };
+     setProducts = async (categoria) => {
+        const productos = localStorage.getItem('products');
+        const contador = parseInt(localStorage.getItem('contador'));
+        let url='';
+        if(productos !== undefined && productos !== null && contador !== undefined 
+                    && contador !== null && contador>0){
+          
+            if(categoria === undefined || categoria === null){
+                const json = JSON.parse(productos)
+                this.setState({
+                    products: json
+                })
+            }else{
+                alert('filtrar '+categoria)
+                url= `http://localhost:3001/articulos`;
+                // url= 'http://localhost:3001/articulos/'+categoria;
+            }
+            
+        }else{
+            if(categoria === undefined || categoria === null){
+                alert('ingreso')
+                this.setState(()=>{
+                    return {cantidad:0}   
+                })
+                alert('continuo')
+                url= `http://localhost:3001/articulos`;
+                //alert('categoria viene vacio')
+                const json = await axios.get(url)
+                .catch(err=>{console.log(err)})        
+                const array = json.data.articulos
+                if(array.length === 0) return null;
+                let tempProducts =[];
+                array.forEach(item =>{
+                    const singleItem = {...item};
+                    tempProducts = [...tempProducts, singleItem];
+                })
+                this.setState( () => {
+                    return {products:tempProducts}
+                });
+            
+            }else{
+                alert('filtrar '+categoria)
+                url= `http://localhost:3001/articulos`;
+                // url= 'http://localhost:3001/articulos/'+categoria;
+                const json = await axios.get(url)
+                .catch(err=>{console.log(err)})        
+                const array = json.data.articulos
+                if(array.length === 0) return null;
+                let tempProducts =[];
+                array.forEach(item =>{
+                    const singleItem = {...item};
+                    tempProducts = [...tempProducts, singleItem];
+                })
+                this.setState( () => {
+                    return {products:tempProducts}
+                });
+            }
+        } 
+           
+       
+    };
      getItem = id =>{
          const product = this.state.products.find(item => item._id === id);
          return product;
@@ -120,7 +181,80 @@ export default class ProductProvider extends Component {
              return {detailProduct:product}   
          })
      }
-    
+     //////////////////////////////////// 
+     saludo = (dato) =>{
+        alert('holi '+dato)
+     }
+   ///////////////////////////////////////
+     incrementCartCounter =() =>{
+       let suma = this.state.cantidad +1
+        this.setState(() =>{
+            return {
+                cantidad: suma
+            }
+        })
+     }
+    ///////////////////////////////////////
+    restarCantidadCart =() =>{
+        
+        alert('disminuye') 
+         
+      }
+     resetCartCounter =() =>{
+        this.setState(() =>{
+             return {
+                 cantidad: 0
+             }
+         })
+      }
+    //////////////////////////////////////
+      datosBusqueda =(termino)=>{
+       if(termino !== undefined && termino !== null ){
+            this.setState({
+                termino
+            }, () =>{
+                //this.realizarBusqueda();
+                this.setProducts(termino);
+            })
+       } 
+     }
+    /////////////////////////////////////
+      login = async (datos) =>{
+        
+        if(datos !== undefined && datos !== null ){
+            // axios.post(`https://jsonplaceholder.typicode.com/users`, { user })
+            const url= `http://localhost:3001/usuario/login`;
+            console.log(datos)
+            const json = await axios.post(url,{datos})
+            .catch(err=>{console.log(err)})        
+            const array = json.data.usuario
+            const res=json.data.res
+            if(res){
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: {res},
+                    footer: '<a href>Tienes Problemas para Ingresar?</a>'
+                  })
+                return null;
+            }
+           if(array.length >= 0){
+                    Swal.fire(
+                        'Bienvenido!',
+                        'Usuario',
+                        'success'
+                    )
+                this.setState(()=>{
+                    return{userLoginState: true}
+                    //, userLoginState: array
+                })
+            }
+        }else{
+            alert('no login')
+        }
+      }
+
+      ////////////////////////////////////
      addToCart = (id) =>{
          let tempProducts =[...this.state.products];
          const index = tempProducts.indexOf(this.getItem(id));
@@ -137,10 +271,18 @@ export default class ProductProvider extends Component {
          },
          () =>{
              this.addTotals();
-         }
+           }
          );
          
     };
+    /////////////////////////////////////
+    abrirModalBusqueda = () =>{
+     this.setState(()=>{
+            return{modalBusquedaOpen: true}
+     })
+    }
+   
+   ///////////////////////////////////
     openModal = id =>{
         const product = this.getItem(id);
         this.setState(()=>{
@@ -152,6 +294,21 @@ export default class ProductProvider extends Component {
             return {modalOpen: false}
         })
     }
+    //////////////////////////////////////
+    abrirModalLogin = () =>{
+     this.setState(()=>{
+            return{modalLoginOpen: true}
+         })
+    }
+   
+    ///////////////////////////////////
+    abrirModalRegistro = () =>{
+       this.setState(()=>{
+            return{modalRegistroOpen: true}
+         })
+    }
+   
+    ///////////////////////////////////
     increment = (id) => {
         let tempCart = [...this.state.cart];
         const selectedProduct = tempCart.find(item=>item._id ===id)
@@ -169,8 +326,10 @@ export default class ProductProvider extends Component {
         const index = tempCart.indexOf(selectedProduct);
         const product = tempCart[index];
         product.cantidad = product.cantidad - 1;
+      
         if(product.cantidad === 0){
             this.removeItem(id)
+           // this.decrementCartCounter()
         }else{
             product.total = product.cantidad * product.precio;
             this.setState(
@@ -191,6 +350,7 @@ export default class ProductProvider extends Component {
         removedProduct.inCart =false;
         removedProduct.count = 0;
         removedProduct.total = 0;
+        this.restarCantidadCart()
         this.setState(() =>{
             return{
                 cart:[...tempCart],
@@ -199,13 +359,15 @@ export default class ProductProvider extends Component {
         },
         () =>{
             this.addTotals();
-        }
+            }
         )
     }
     clearCart = () =>{
         this.setState(() =>{
-            return {cart:[]}
+            return {cart:[], cantidad:0}
         },() =>{
+            localStorage.removeItem('products');
+            localStorage.removeItem('cart');
             this.setProducts();
             this.addTotals();
         }
@@ -268,11 +430,21 @@ export default class ProductProvider extends Component {
                 addToCart: this.addToCart,
                 openModal: this.openModal,
                 closeModal: this.closeModal,
+                abrirBusqueda: this.abrirModalBusqueda,
+                abrirLogin: this.abrirModalLogin,
+                abrirRegistro: this.abrirModalRegistro,
                 increment: this.increment,
                 decrement: this.decrement,
                 removeItem: this.removeItem,
                 clearCart: this.clearCart,
                 comprarCart: this.comprarCart,
+                suma: this.incrementCartCounter,
+                //resta: this.decrementCartCounter,
+                reset: this.resetCartCounter,
+                busqueda: this.datosBusqueda,
+                login: this.login,
+                
+                
                
                
             }}>

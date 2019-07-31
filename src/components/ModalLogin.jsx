@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-import Ingreso from './formularioIngreso';
+import { ProductConsumer } from './Context';
+import FormIngreso from './FormIngreso';
 
-class ModalIngreso extends Component {
-   
-    render() { 
-        return ( 
-                <React.Fragment>
-                    <a href="login" data-toggle="modal" data-target="#login">
-                        Ingresar
-                    </a>
-                    {/* <!-- The Modal Login--> */}
-                    <div className="modal" id="login">
+export default class ModalLogin extends Component {
+    busquedaRef = React.createRef();
+
+    render() {
+        return (
+            <ProductConsumer>
+                {(value) => {
+                    const { modalLoginOpen } = value;
+                    if (!modalLoginOpen) {
+                        return null;
+                    } else {
+                        return (
+                            <React.Fragment>
+                                {/* <!-- The Modal Login--> */}
+                                <div className="modal" id="login">
                                     <div className="modal-dialog modal-sm">
                                         <div className="modal-content">
                                             {/* <!-- Modal Header --> */}
@@ -19,18 +25,19 @@ class ModalIngreso extends Component {
                                             </div>
                                             {/* <!-- Modal body --> */}
                                             <div className="modal-body bg-dark">
-                                                <Ingreso />
+                                                <FormIngreso 
+                                                login={value.login} />
                                             </div>
-                                           {/* <!-- Modal footer --> */}
-                                            {/* <div className="modal-footer">
-                                    <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
-                                    </div> */}
                                         </div>
                                     </div>
                                 </div>
-                </React.Fragment>
-         );
+                            </React.Fragment>
+                        );
+                    }
+                }
+
+                }
+            </ProductConsumer>
+        );
     }
 }
- 
-export default ModalIngreso;

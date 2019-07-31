@@ -3,8 +3,23 @@ import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import {ProductConsumer} from './Context'
 import PropTypes from 'prop-types'
+import Swal from 'sweetalert2'
 
 export default class Product extends Component {
+
+    aviso = () =>{
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+          });
+          
+          Toast.fire({
+            type: 'success',
+            title: 'Agregado Al Carrito'
+          })
+    }
     render() {
         const {_id, nombre,  imagen, precio, inCart} = this.props.product;
         return (
@@ -16,7 +31,7 @@ export default class Product extends Component {
                       
                         <div className="img-container p-5" 
                             onClick={()=> 
-                                value.handleDetail(_id)
+                                value.handleDetail(_id) 
                             }
                         >   
                         <Link to="/details">
@@ -30,6 +45,8 @@ export default class Product extends Component {
                          onClick={()=>{
                             value.addToCart(_id);
                             value.openModal(_id);
+                            value.suma();
+                            this.aviso();
                         }}>
                         {inCart ? (
                             <p className="text-capitalize mb-0" disabled>

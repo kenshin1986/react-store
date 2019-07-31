@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-class Ingreso extends Component {
+export default class FormRegistro extends Component {
 	constructor(props) {
 		super(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -103,4 +103,3 @@ class Ingreso extends Component {
     }
 }
 
-export default Ingreso

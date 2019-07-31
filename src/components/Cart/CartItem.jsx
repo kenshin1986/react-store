@@ -4,10 +4,10 @@ export default function CartItem({item,value}){
    
    const {_id, nombre ,imagen, precio, total, cantidad} = item;
 
-   const {increment, decrement, removeItem} = value;
+   const {increment, decrement, removeItem, resta} = value;
    
     return (
-        <div className="row my-2 text-capitalize text-center">
+        <div className="row my-2 text-capitalize text-center  ">
             <div className="col-10 mx-auto col-lg-2">
             <img src={imagen} 
                 style={{width: "5rm", height: "5rem"}}
@@ -19,7 +19,7 @@ export default function CartItem({item,value}){
                 {nombre}
             </div>
             <div className="col-10 mx-auto col-lg-2">
-                <span className="d-lg-none">Price :</span>
+                <span className="d-lg-none">Precio :</span>
                 {precio}
             </div>
             <div className="col-10 mx-auto col-lg-2 my-2 my-lg-0">
@@ -35,7 +35,9 @@ export default function CartItem({item,value}){
             </div>
             {/* */}
             <div className="col-10 mx-auto col-lg-2">
-              <div className="cart-icon" onClick={()=> removeItem(_id)}>
+              <div className="cart-icon"
+                     onClick={()=> {removeItem(_id); }  
+               }>
                     <i className="fas fa-trash"> </i>
               </div>
                 

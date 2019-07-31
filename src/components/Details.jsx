@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {ButtonContainer} from './Button';
 import SlideDetails from './Slide/SlideDetails'
 
+
 export default class Details extends Component {
     render() {
         return (
@@ -12,6 +13,7 @@ export default class Details extends Component {
                     const {_id, marca, imagen, info, precio, nombre, inCart}= value.detailProduct;
                     return (
                         <div className="container py-5">
+                          
                         {/* title */}
                             <div className="row">
                                 <div className="col-10 mx-auto text-center 

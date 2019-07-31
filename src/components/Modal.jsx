@@ -14,7 +14,7 @@ export default class Modal extends Component {
                     const { imagen, nombre, precio } = value.modalProduct;
                         if (!modalOpen) {
                             return null;
-                        } else {
+                        } else {    
                            return(
                             <ModalContainer>
                                 <div className="container">
@@ -49,7 +49,6 @@ export default class Modal extends Component {
                            ); 
                         }
                     }
-
                 }
             </ProductConsumer>
         );
@@ -57,7 +56,7 @@ export default class Modal extends Component {
 }
 const ModalContainer = styled.div`
     position: fixed;
-    top: 0;
+    top: 35px;
     left: 0;
     right: 0;
     bottom: 0;
