@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from './components/Navbar';
-import ProductList from './components/ProductList';
-import Details from './components/Details';
-import Cart from './components/Cart';
-import Default from './components/Default';
-import Modal from './components/Modal'
-import Home from './components/Home'
-import Info from '../src/components/info';
-import Search from './components/Search'
-import ModalLogin from './components/ModalLogin'
-import ModalRegistro from './components/ModalRegistro'
+import Navbar from './components/NavBar/Navbar.jsx';
+import ProductList from './components/Productos/ProductList';
+import Details from './components/Productos/Details';
+import Cart from './components/Cart/Cart'
+import Default from './components/Default/Default';
+import Home from './components/Home/Home'
+import Footer from './components/Footer/Footer';
+import ModalSearch from './components/Modals/ModalSearch'
+import Modal from './components/Modals/Modal'
+import ModalLogin from './components/Modals/ModalLogin'
+import ModalRegistro from './components/Modals/ModalRegistro'
 
 
 class App extends Component {
@@ -29,9 +29,9 @@ class App extends Component {
           <Route path="/agrupaciones/*" component={ProductList}/> 
           <Route  component={Default}/>
         </Switch> 
-        <Info/>
+        <Footer/>
         <Modal/>
-        <Search/>
+        <ModalSearch/>
         <ModalLogin/>
         <ModalRegistro/>
         </BrowserRouter>

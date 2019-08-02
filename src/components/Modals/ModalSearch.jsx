@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { ProductConsumer } from './Context';
+import { ProductConsumer } from '../Context';
 
-export default class Search extends Component {
+export default class ModalSearch extends Component {
     busquedaRef = React.createRef();
     render() {
         return (

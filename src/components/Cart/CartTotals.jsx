@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 
 class CartTotals extends Component {
     aviso = () =>{ 
-        const {cartSubtotal, cartTax, cartTotal, clearCart, comprarCart, reset} = this.props.value;
+        const {clearCart, reset} = this.props.value;
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
               confirmButton: 'btn btn-success',
@@ -44,7 +44,7 @@ class CartTotals extends Component {
           })
     }
     render() { 
-        const {cartSubtotal, cartTax, cartTotal, clearCart, comprarCart, reset} = this.props.value;
+        const {cartSubtotal, cartTax, cartTotal} = this.props.value;
 
         return (  
             
@@ -53,11 +53,11 @@ class CartTotals extends Component {
                 <div className="row">
                     <div className="col-10 mt-2 ml-sm-5 ml-md-auto
                             col-sm-8 text-capitalize text-right">
-                        <Link to="/ProductList">
+                        <Link to="/Cart">
                             <button className="btn btn-outline-danger text-uppercase
                                 mb-3 px-5 mr-2" 
                                 type="button"
-                                onClick={() => {aviso()}}
+                                onClick={() => this.aviso()}
                                 >
                                     Eliminar Articulos
                                 </button>
@@ -65,7 +65,7 @@ class CartTotals extends Component {
                         <button className="btn btn-outline-dark text-uppercase
                                 mb-3 px-5" 
                                 type="button"
-                                onClick={() => comprarCart()}
+                                // onClick={() => comprarCart()}
                                 >
                                     Comprar
                                 </button>

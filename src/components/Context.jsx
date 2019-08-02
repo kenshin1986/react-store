@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import jwt from 'jwt-simple'
+//import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
+//import Auth from './Auth/Auth'
+
 
 
 // creamos el context
@@ -94,7 +98,6 @@ export default class ProductProvider extends Component {
         )
         localStorage.setItem(
             'cart',
-            
             JSON.stringify(this.state.cart)
         )
         localStorage.setItem(
@@ -130,13 +133,13 @@ export default class ProductProvider extends Component {
             
         }else{
             if(categoria === undefined || categoria === null){
-                alert('ingreso')
+               
                 this.setState(()=>{
                     return {cantidad:0}   
                 })
-                alert('continuo')
+               
                 url= `http://localhost:3001/articulos`;
-                //alert('categoria viene vacio')
+                
                 const json = await axios.get(url)
                 .catch(err=>{console.log(err)})        
                 const array = json.data.articulos
@@ -181,10 +184,7 @@ export default class ProductProvider extends Component {
              return {detailProduct:product}   
          })
      }
-     //////////////////////////////////// 
-     saludo = (dato) =>{
-        alert('holi '+dato)
-     }
+    
    ///////////////////////////////////////
      incrementCartCounter =() =>{
        let suma = this.state.cantidad +1
@@ -197,7 +197,23 @@ export default class ProductProvider extends Component {
     ///////////////////////////////////////
     restarCantidadCart =() =>{
         
-        alert('disminuye') 
+        const resta = this.state.cantidad -1
+      
+        if(resta === 0){
+            localStorage.removeItem('contador');
+            this.setState(() =>{
+                return {
+                    cantidad: 0
+                }
+            })
+
+        }else{
+            this.setState(() =>{
+                return {
+                    cantidad: resta
+                }
+            })
+        }
          
       }
      resetCartCounter =() =>{
@@ -224,35 +240,64 @@ export default class ProductProvider extends Component {
         if(datos !== undefined && datos !== null ){
             // axios.post(`https://jsonplaceholder.typicode.com/users`, { user })
             const url= `http://localhost:3001/usuario/login`;
-            console.log(datos)
+            
             const json = await axios.post(url,{datos})
-            .catch(err=>{console.log(err)})        
-            const array = json.data.usuario
+            .catch(err=>{console.log(err)}) 
             const res=json.data.res
+            console.log(res)
             if(res){
                 Swal.fire({
                     type: 'error',
                     title: 'Oops...',
-                    text: {res},
+                    text: res,
                     footer: '<a href>Tienes Problemas para Ingresar?</a>'
                   })
                 return null;
             }
-           if(array.length >= 0){
-                    Swal.fire(
+            if(json.data.token){
+
+                   
+            const array = json.data.token.split(" ")[0]
+            const payload = jwt.decode(array,"SOLTEC-tecnologiaydesarrollo$")
+            
+           if(payload.sub !== undefined || payload.sub !== null){
+                const nombre = payload.sub[0].nombre
+                
+                Swal.fire(
                         'Bienvenido!',
-                        'Usuario',
+                        nombre.toUpperCase(),
                         'success'
                     )
+              
                 this.setState(()=>{
                     return{userLoginState: true}
                     //, userLoginState: array
-                })
+                },
+                () =>{
+                         this.cerrarModalLogin();               
+                     //this.redireccionamiento();
+                  }
+                )
+               
+                
             }
-        }else{
-            alert('no login')
-        }
+            }else{
+                alert('no login')
+            }
+         }
       }
+
+    //   redireccionamiento = () =>{
+    //     let tempStatus = [this.state.userLoginState]; 
+    //     if(tempStatus){
+            
+    //         return (
+               
+               
+    //           );
+    //         //render{ () => ( <Redirect to="/" />) }
+    //       }
+    //   }
 
       ////////////////////////////////////
      addToCart = (id) =>{
@@ -300,6 +345,13 @@ export default class ProductProvider extends Component {
             return{modalLoginOpen: true}
          })
     }
+    cerrarModalLogin = () =>{
+        
+        this.setState(()=>{
+               return{modalLoginOpen: false}
+            }
+            )
+       }
    
     ///////////////////////////////////
     abrirModalRegistro = () =>{
@@ -329,7 +381,8 @@ export default class ProductProvider extends Component {
       
         if(product.cantidad === 0){
             this.removeItem(id)
-           // this.decrementCartCounter()
+            this.restarCantidadCart()
+            this.setProducts();
         }else{
             product.total = product.cantidad * product.precio;
             this.setState(
@@ -358,7 +411,8 @@ export default class ProductProvider extends Component {
             };
         },
         () =>{
-            this.addTotals();
+            this.addTotals()
+            this.setProducts();
             }
         )
     }
@@ -439,7 +493,6 @@ export default class ProductProvider extends Component {
                 clearCart: this.clearCart,
                 comprarCart: this.comprarCart,
                 suma: this.incrementCartCounter,
-                //resta: this.decrementCartCounter,
                 reset: this.resetCartCounter,
                 busqueda: this.datosBusqueda,
                 login: this.login,

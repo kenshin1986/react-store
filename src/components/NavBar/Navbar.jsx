@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import Logo from './Logo';
-import BotonBarraTop from './BotonBarraTop';
-import CartContador from './Cart/CartContador'
+import BotonBarraTop from '../Botones/BotonBarraTop';
+import CartContador from '../Cart/CartContador'
 import './navbar.css';
 import { Link } from 'react-router-dom'
-import { ProductConsumer } from './Context'
+import { ProductConsumer } from '../Context'
 
 
 
@@ -83,7 +83,7 @@ class Navbar extends Component {
                                   })}
                                 <li className="nav-item">
                                 <ProductConsumer>
-                                        { ( value) => (
+                                        {/* { ( value) => (
                                             <a href="login" data-toggle="modal" data-target="#login" 
                                                 onClick={()=>{
                                                            value.abrirLogin();
@@ -91,7 +91,11 @@ class Navbar extends Component {
                                                 Ingresar
                                             </a>
                                                
-                                         )}
+                                         )} */}
+                                           <button className="btn btn-primary">
+                                               
+                                           </button> 
+
                                     </ProductConsumer>
                                     
                                 </li>

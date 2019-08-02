@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Info = (props) => (
+const Footer = (props) => (
    <div className="px-1 py-3 ">
       <div className="row py-1 px-0 bg-dark">
        <div className="col-6 col-md-4 mb-0 ">  {/*primera columna */}  
@@ -48,4 +48,4 @@ const Info = (props) => (
 )
 
 
-export default Info;
+export default Footer;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ProductConsumer } from './Context';
-import FormIngreso from './FormIngreso';
+import { ProductConsumer } from '../Context';
+import FormIngreso from '../Formularios/FormIngreso';
 
 export default class ModalLogin extends Component {
     busquedaRef = React.createRef();
@@ -11,7 +11,7 @@ export default class ModalLogin extends Component {
                 {(value) => {
                     const { modalLoginOpen } = value;
                     if (!modalLoginOpen) {
-                        return null;
+                        
                     } else {
                         return (
                             <React.Fragment>
@@ -21,7 +21,12 @@ export default class ModalLogin extends Component {
                                         <div className="modal-content">
                                             {/* <!-- Modal Header --> */}
                                             <div className="modal-header ">
-                                                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                                                <button type="button" 
+                                                        className="close" 
+                                                        data-dismiss="modal"
+                                                        id="cerrarLogin">
+                                                        &times;
+                                                </button>
                                             </div>
                                             {/* <!-- Modal body --> */}
                                             <div className="modal-body bg-dark">

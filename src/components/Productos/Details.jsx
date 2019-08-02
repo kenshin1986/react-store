@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {ProductConsumer} from './Context';
+import {ProductConsumer} from '../Context';
 import {Link} from 'react-router-dom';
-import {ButtonContainer} from './Button';
-import SlideDetails from './Slide/SlideDetails'
+import {ButtonContainer} from '../Botones/Button';
+import SlideDetails from '../Slide/SlideDetails'
 
 
 export default class Details extends Component {

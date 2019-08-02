@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
-import {ProductConsumer} from './Context'
+import {ProductConsumer} from '../Context'
 import PropTypes from 'prop-types'
 import Swal from 'sweetalert2'
 

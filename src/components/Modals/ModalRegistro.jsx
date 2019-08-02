@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ProductConsumer } from './Context';
-import FormRegistro from './FormRegistro';
+import { ProductConsumer } from '../Context';
+import FormRegistro from '../Formularios/FormRegistro';
 
 export default class ModalRegistro extends Component {
     busquedaRef = React.createRef();
