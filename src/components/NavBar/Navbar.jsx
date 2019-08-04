@@ -82,22 +82,19 @@ class Navbar extends Component {
                                      )  
                                   })}
                                 <li className="nav-item">
-                                <ProductConsumer>
-                                        {/* { ( value) => (
+                                <Link to="/login">
+                                       login
+                               </Link>
+                                {/* <ProductConsumer>
+                                         { ( value) => (
                                             <a href="login" data-toggle="modal" data-target="#login" 
                                                 onClick={()=>{
                                                            value.abrirLogin();
                                                          }}>
                                                 Ingresar
                                             </a>
-                                               
-                                         )} */}
-                                           <button className="btn btn-primary">
-                                               
-                                           </button> 
-
-                                    </ProductConsumer>
-                                    
+                                         )} 
+                                </ProductConsumer> */}
                                 </li>
                                 <li className="nav-item">
                                 <ProductConsumer>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/NavBar/Navbar.jsx';
@@ -13,6 +13,7 @@ import ModalSearch from './components/Modals/ModalSearch'
 import Modal from './components/Modals/Modal'
 import ModalLogin from './components/Modals/ModalLogin'
 import ModalRegistro from './components/Modals/ModalRegistro'
+import FormIngreso from './components/Formularios/FormIngreso'
 
 
 class App extends Component {
@@ -23,7 +24,8 @@ class App extends Component {
         <Navbar />
          <Switch>
           <Route exact path="/" component={Home}/>
-          <Route exact path="/ProductList" component={ProductList}/>
+          <Route exact path="/productList" component={ProductList}/>
+          <Route exact path="/login" component={FormIngreso}/>
           <Route path="/details" component={Details}/>
           <Route path="/cart" component={Cart}/>
           <Route path="/agrupaciones/*" component={ProductList}/> 
