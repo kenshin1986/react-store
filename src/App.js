@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/NavBar/Navbar.jsx';
@@ -14,6 +14,7 @@ import Modal from './components/Modals/Modal'
 import ModalLogin from './components/Modals/ModalLogin'
 import ModalRegistro from './components/Modals/ModalRegistro'
 import FormIngreso from './components/Formularios/FormIngreso'
+//import Auth from "./components/Auth/Auth";
 
 
 class App extends Component {
@@ -36,8 +37,9 @@ class App extends Component {
         <ModalSearch/>
         <ModalLogin/>
         <ModalRegistro/>
+       
         </BrowserRouter>
-     
+        
     );
   }
 

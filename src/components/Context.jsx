@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import jwt from 'jwt-simple'
-//import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
+//import {BrowserRouter, Switch, Route, Redirect, withRouter} from 'react-router-dom';
 //import Auth from './Auth/Auth'
+
 
 
 
@@ -23,7 +24,7 @@ export default class ProductProvider extends Component {
         modalOpen: false, 
         modalProduct: [],
         modalBusquedaOpen: true,
-        modalLoginOpen: true,
+        modalLoginOpen: false,
         modalRegistroOpen: true,
         userLoginState: false,
         cartSubTotal:0,
@@ -31,6 +32,7 @@ export default class ProductProvider extends Component {
         cartTotal: 0,
         cantidad:0,
         termino: '',
+        btnLogName: 'Ingresar',
        
 
      };
@@ -236,75 +238,56 @@ export default class ProductProvider extends Component {
      }
     /////////////////////////////////////
       login = async (datos) =>{
-        
-        if(datos !== undefined && datos !== null ){
-            // axios.post(`https://jsonplaceholder.typicode.com/users`, { user })
-            const url= `http://localhost:3001/usuario/login`;
-            
-            const json = await axios.post(url,{datos})
-            .catch(err=>{console.log(err)}) 
-            const res=json.data.res
-            console.log(res)
-            if(res){
-                Swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: res,
-                    footer: '<a href>Tienes Problemas para Ingresar?</a>'
-                  })
-                return null;
-            }
-            if(json.data.token){
-
-                   
-            const array = json.data.token.split(" ")[0]
-            const payload = jwt.decode(array,"SOLTEC-tecnologiaydesarrollo$")
-            
-           if(payload.sub !== undefined || payload.sub !== null){
-                const nombre = payload.sub[0].nombre
+            if(datos !== undefined && datos !== null ){
+                // axios.post(`https://jsonplaceholder.typicode.com/users`, { user })
+                const url= `http://localhost:3001/usuario/login`;
+                const json = await axios.post(url,{datos})
+                .catch(err=>{console.log(err)}) 
+                const res=json.data.res
+                console.log(res)
+                if(res){
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: res,
+                        footer: '<a href>Tienes Problemas para Ingresar?</a>'
+                      })
+                    return null;
+                }
+                if(json.data.token){
+                 const array = json.data.token.split(" ")[0]
+                 const payload = jwt.decode(array,"SOLTEC-tecnologiaydesarrollo$")
                 
-                Swal.fire(
-                        'Bienvenido!',
-                        nombre.toUpperCase(),
-                        'success'
+                 if(payload.sub !== undefined || payload.sub !== null){
+                    const nombre = payload.sub[0].nombre
+                    Swal.fire(
+                            'Bienvenido!',
+                            nombre.toUpperCase(),
+                            'success'
+                        )
+                  
+                    this.setState(()=>{
+                        return{userLoginState: true}
+                        //, userLoginState: array
+                            },
+                        () =>{
+                                  
+                         this.cerrarModalLogin();
+                         this.btnLoginName()
+                         } 
                     )
-              
-                this.setState(()=>{
-                    return{userLoginState: true}
-                    //, userLoginState: array
-                },
-                () =>{
-                         this.cerrarModalLogin();               
-                     //this.redireccionamiento();
-                  }
-                )
-               
-                
-            }
-            }else{
-                alert('no login')
-            }
-         }
-      }
-
-    //   redireccionamiento = () =>{
-    //     let tempStatus = [this.state.userLoginState]; 
-    //     if(tempStatus){
-            
-    //         return (
-               
-               
-    //           );
-    //         //render{ () => ( <Redirect to="/" />) }
-    //       }
-    //   }
+               }
+                }else{
+                    alert('no login')
+                }
+             }
+     }
 
       ////////////////////////////////////
      addToCart = (id) =>{
          let tempProducts =[...this.state.products];
          const index = tempProducts.indexOf(this.getItem(id));
          const product = tempProducts[index];
-        
          product.inCart = true;
          product.count = 1;
          const precio = product.precio;
@@ -318,7 +301,6 @@ export default class ProductProvider extends Component {
              this.addTotals();
            }
          );
-         
     };
     /////////////////////////////////////
     abrirModalBusqueda = () =>{
@@ -341,17 +323,27 @@ export default class ProductProvider extends Component {
     }
     //////////////////////////////////////
     abrirModalLogin = () =>{
-     this.setState(()=>{
-            return{modalLoginOpen: true}
-         })
-    }
+        if(this.state.btnLogName !== 'Salir'){
+            this.setState(()=>{
+                return{modalLoginOpen: true}
+             })
+        }else{
+            this.setState(()=>{
+                return{userLoginState: false}
+                //, userLoginState: array
+            },
+            () =>{
+                 //destruir el token    
+                 this.btnLoginName()
+              })
+        }
+     }
     cerrarModalLogin = () =>{
-        
         this.setState(()=>{
                return{modalLoginOpen: false}
             }
             )
-       }
+        }
    
     ///////////////////////////////////
     abrirModalRegistro = () =>{
@@ -378,7 +370,6 @@ export default class ProductProvider extends Component {
         const index = tempCart.indexOf(selectedProduct);
         const product = tempCart[index];
         product.cantidad = product.cantidad - 1;
-      
         if(product.cantidad === 0){
             this.removeItem(id)
             this.restarCantidadCart()
@@ -424,7 +415,7 @@ export default class ProductProvider extends Component {
             localStorage.removeItem('cart');
             this.setProducts();
             this.addTotals();
-        }
+             }
         )
     }
 
@@ -459,6 +450,22 @@ export default class ProductProvider extends Component {
         }    
         
     }
+    ///////////////////////////////////////////////
+    btnLoginName= () =>{
+        if(this.state.userLoginState){
+                this.setState(() =>{
+                    return {btnLogName:'Salir'}
+            })
+       }else{
+            this.setState(() =>{
+                    return {btnLogName:'Ingresar'}
+            })
+       }
+       
+        
+    }
+
+    //////////////////////////////////////////////
     
     addTotals = () =>{
         let subTotal = 0;
@@ -486,6 +493,7 @@ export default class ProductProvider extends Component {
                 closeModal: this.closeModal,
                 abrirBusqueda: this.abrirModalBusqueda,
                 abrirLogin: this.abrirModalLogin,
+                cerrarLogin: this.cerrarModalLogin,
                 abrirRegistro: this.abrirModalRegistro,
                 increment: this.increment,
                 decrement: this.decrement,
@@ -496,6 +504,9 @@ export default class ProductProvider extends Component {
                 reset: this.resetCartCounter,
                 busqueda: this.datosBusqueda,
                 login: this.login,
+                stateUser: this.userLoginState,
+                cambiarNombreBtn: this.btnLoginName,
+                Name: this.btnLogName
                 
                 
                

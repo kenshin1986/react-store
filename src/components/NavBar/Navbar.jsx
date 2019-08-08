@@ -82,20 +82,21 @@ class Navbar extends Component {
                                      )  
                                   })}
                                 <li className="nav-item">
-                                <Link to="/login">
-                                       login
-                               </Link>
-                                {/* <ProductConsumer>
-                                         { ( value) => (
-                                            <a href="login" data-toggle="modal" data-target="#login" 
-                                                onClick={()=>{
-                                                           value.abrirLogin();
-                                                         }}>
-                                                Ingresar
-                                            </a>
-                                         )} 
-                                </ProductConsumer> */}
-                                </li>
+                                    <ProductConsumer>
+                                            { ( value) => (
+                                                
+                                                <a className="mt-1 mr-lg-2" href="#top"  
+                                                    onClick={()=>{
+                                                            value.abrirLogin();
+                                                            
+                                                            }}>
+                                                        {value.btnLogName}
+                                                    
+                                                    
+                                                </a>
+                                            )} 
+                                    </ProductConsumer> 
+                                </li>                        
                                 <li className="nav-item">
                                 <ProductConsumer>
                                         { ( value) => (
