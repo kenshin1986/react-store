@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
+
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/NavBar/Navbar.jsx';
@@ -14,7 +15,7 @@ import Modal from './components/Modals/Modal'
 import ModalLogin from './components/Modals/ModalLogin'
 import ModalRegistro from './components/Modals/ModalRegistro'
 import FormIngreso from './components/Formularios/FormIngreso'
-//import Auth from "./components/Auth/Auth";
+
 
 
 class App extends Component {
@@ -29,7 +30,8 @@ class App extends Component {
           <Route exact path="/login" component={FormIngreso}/>
           <Route path="/details" component={Details}/>
           <Route path="/cart" component={Cart}/>
-          <Route path="/agrupaciones/*" component={ProductList}/> 
+          <Route path="/agrupaciones/*" component={ProductList}/>
+          
           <Route  component={Default}/>
         </Switch> 
         <Footer/>

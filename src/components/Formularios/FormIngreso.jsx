@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 
 export default class FormIngreso extends Component {
 
-  handleSubmit = this.handleSubmit.bind(this);
+ 
   userRef = React.createRef();
   passRef = React.createRef();
 
@@ -15,10 +15,7 @@ export default class FormIngreso extends Component {
     }
     this.props.login(datos);
   }
-  handleSubmit(event) {
-
-    event.preventDefault();
-  }
+ 
   render() {
     return (
     <div className="container-fluid">
@@ -27,7 +24,11 @@ export default class FormIngreso extends Component {
               <h5 className="card-title text-center"><strong>Login</strong></h5>
               <form className="form-signin" onSubmit={this.obtenerDatos}>
                 <div className="form-label-group">
-                  <input type="email" id="inputCorreo" className="form-control my-3" placeholder="TuCorreo@TuDominio.com " required="required" ref={this.userRef}/>
+                  <input type="email" id="inputCorreo" 
+                        className="form-control my-3" 
+                        placeholder="TuCorreo@TuDominio.com " 
+                        required="required" 
+                        ref={this.userRef}/>
                   {/* <label htmlFor="inputCorreo">
                     Correo Electronico
                   </label> */}

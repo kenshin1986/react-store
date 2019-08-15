@@ -100,11 +100,12 @@ class Navbar extends Component {
                                 <li className="nav-item">
                                 <ProductConsumer>
                                         { ( value) => (
-                                            <a href="registro" data-toggle="modal" data-target="#registro"
+                                            
+                                            <a href="#top" className={value.pintar}
                                                 onClick={()=>{
                                                     value.abrirRegistro();
                                                          }}>
-                                                Registrarse
+                                                Registrarse 
                                             </a>
                                                
                                          )}
