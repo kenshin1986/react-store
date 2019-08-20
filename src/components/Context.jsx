@@ -39,24 +39,24 @@ export default class ProductProvider extends Component {
 
      };
      componentDidMount(){
-        // const tokenLocal = JSON.parse(localStorage.getItem('token'))
-       
-        // if(tokenLocal.length === 0){
-        //    alert('tokelocal vacio')
-        //     console.log(tokenLocal)
-        // }else{
-        //     this.setState(()=>{
-        //         return{userLoginState: true,
-        //                 token: tokenLocal
-        //         }
-                
-        //         },
-        //         () =>{
-        //          this.cerrarModalLogin();
-        //          this.btnLoginName()
-        //          } 
-        //     )
-        // } 
+        const tokenLocal = JSON.parse(localStorage.getItem('token'))
+        if( tokenLocal.length===0){
+            this.sinUsuarioLogeado()
+        }else{
+            this.sinUsuarioLogeado() ///// pendiente por logica de estados
+            this.conUsuarioLogeado(tokenLocal) 
+        }
+        
+  
+    }
+        
+     componentDidUpdate(){
+            this.estadosLocales()
+        
+    }
+
+//////////////////////////////////////////////////////////////////////////
+    sinUsuarioLogeado = () =>{
         
         if(this.state.products.length===0){
             this.setProducts();
@@ -102,11 +102,23 @@ export default class ProductProvider extends Component {
                 })
             }
         }
-  
     }
-        
-     componentDidUpdate(){
+    
+    conUsuarioLogeado = (tokenLocal) =>{
+        this.setState(()=>{
+            return{userLoginState: true,
+                    token: tokenLocal
+            }
+            },
+            () =>{
+             this.cerrarModalLogin();
+             this.btnLoginName()
+             } 
+        )
+    }
 
+//////////////////////////////////////////////////////////////////
+    estadosLocales= () =>{
         localStorage.setItem(
             'products',
             JSON.stringify(this.state.products)
@@ -133,14 +145,23 @@ export default class ProductProvider extends Component {
          
             JSON.stringify(this.state.cartTotal)
        )
-    //    localStorage.setItem(
-    //    'token',
-     
-    //     JSON.stringify(this.state.token)
-    //     )
+        this.asignarTokenLocal()
     }
 
 
+    /**    */
+
+    asignarTokenLocal = () =>{
+        localStorage.setItem(
+            'token',
+         JSON.stringify(this.state.token)
+        )
+    }
+
+
+
+
+///////////////////////////////////////////////////////////////////
      setProducts = async (categoria) => {
         const productos = localStorage.getItem('products');
         const contador = parseInt(localStorage.getItem('contador'));
@@ -342,17 +363,26 @@ export default class ProductProvider extends Component {
                             },
                         () =>{
                                   
-                         this.cerrarModalLogin();
+                         this.cerrarModalLogin()
                          this.btnLoginName()
+                         this.asignarTokenLocal()
                          } 
                     )
-                    //let nombre = this.state.token.nombre
+                    let nombre = this.state.token.nombre
                     
                     Swal.fire(
                         'Bienvenido!',
-                        '',
+                        nombre,
                         'success'
                     )
+               }else{
+                    // const tokenLocal = JSON.parse(localStorage.getItem('token'))
+                    // let nombre = tokenLocal.nombre
+                    // Swal.fire(
+                    //     'Bienvenido!',
+                    //      nombre,
+                    //     'success'
+                    // )
                }
      }
 
