@@ -51,8 +51,37 @@ export default class ProductProvider extends Component {
     }
         
      componentDidUpdate(){
-            this.estadosLocales()
-        
+
+        localStorage.setItem(
+            'products',
+            JSON.stringify(this.state.products)
+        )
+        localStorage.setItem(
+            'contador',
+            JSON.stringify(this.state.cantidad)
+        )
+        localStorage.setItem(
+            'detailProduct',
+            JSON.stringify(this.state.detailProduct)
+        )
+        localStorage.setItem(
+            'cart',
+            JSON.stringify(this.state.cart)
+        )
+        localStorage.setItem(
+             'cartTax',
+          
+             JSON.stringify(this.state.cartTax)
+        )
+        localStorage.setItem(
+            'cartTotal',
+         
+            JSON.stringify(this.state.cartTotal)
+       )
+        localStorage.setItem(
+            'token',
+         JSON.stringify(this.state.token)
+        )
     }
 
 //////////////////////////////////////////////////////////////////////////
@@ -118,50 +147,6 @@ export default class ProductProvider extends Component {
     }
 
 //////////////////////////////////////////////////////////////////
-    estadosLocales= () =>{
-        localStorage.setItem(
-            'products',
-            JSON.stringify(this.state.products)
-        )
-        localStorage.setItem(
-            'contador',
-            JSON.stringify(this.state.cantidad)
-        )
-        localStorage.setItem(
-            'detailProduct',
-            JSON.stringify(this.state.detailProduct)
-        )
-        localStorage.setItem(
-            'cart',
-            JSON.stringify(this.state.cart)
-        )
-        localStorage.setItem(
-             'cartTax',
-          
-             JSON.stringify(this.state.cartTax)
-        )
-        localStorage.setItem(
-            'cartTotal',
-         
-            JSON.stringify(this.state.cartTotal)
-       )
-        this.asignarTokenLocal()
-    }
-
-
-    /**    */
-
-    asignarTokenLocal = () =>{
-        localStorage.setItem(
-            'token',
-         JSON.stringify(this.state.token)
-        )
-    }
-
-
-
-
-///////////////////////////////////////////////////////////////////
      setProducts = async (categoria) => {
         const productos = localStorage.getItem('products');
         const contador = parseInt(localStorage.getItem('contador'));
@@ -363,26 +348,17 @@ export default class ProductProvider extends Component {
                             },
                         () =>{
                                   
-                         this.cerrarModalLogin()
+                         this.cerrarModalLogin();
                          this.btnLoginName()
-                         this.asignarTokenLocal()
                          } 
                     )
-                    let nombre = this.state.token.nombre
+                    //let nombre = this.state.token.nombre
                     
                     Swal.fire(
                         'Bienvenido!',
-                        nombre,
+                        '',
                         'success'
                     )
-               }else{
-                    // const tokenLocal = JSON.parse(localStorage.getItem('token'))
-                    // let nombre = tokenLocal.nombre
-                    // Swal.fire(
-                    //     'Bienvenido!',
-                    //      nombre,
-                    //     'success'
-                    // )
                }
      }
 
