@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import Logo from './Logo';
+import User from './User';
 import BotonBarraTop from '../Botones/BotonBarraTop';
 import CartContador from '../Cart/CartContador'
 import './navbar.css';
 import { Link } from 'react-router-dom'
 import { ProductConsumer } from '../Context'
-
 
 
 class Navbar extends Component {
@@ -28,16 +28,49 @@ class Navbar extends Component {
 
     render() {
         return (
-            <nav  className="navbar navbar-dark bg-dark navbar-expand-md fixed-top mt-0 mb-5 pb-0 pt-0">
-                <div className="row m-0  ">  {/*   inicio primera columna */}
-                    <div className="col-12 col-md-4 col-lg-7  ">
-                        <ul className="navbar-nav ">
-                            <li className="nav-item" >
-                                <div className="row m-0 ">
-                                    <div className="col-7 col-md-7 ">
+            <nav  className="container-fluid navbar-dark bg-dark 
+                                navbar-expand-md 
+                                mr-0 mt-0 ml-0 mb-0
+                                pr-0 pt-0 pl-0 pb-0
+                                fixed-top
+                                ">
+                <div className="row  
+                                mr-0 mt-0 ml-0 mb-0
+                                pr-0 pt-0 pl-0 pb-0
+                                ">  
+                    <div className="col-12 
+                                    col-md-4 
+                                    mr-0 mt-0 ml-0 mb-0
+                                    pr-0 pt-0 pl-0 pb-0 "> {/*   inicio primera columna */}
+                                <div className="row 
+                                                mr-0 mt-0 ml-0 mb-0
+                                                pr-0 pt-0 pl-0 pb-0    
+                                                    ">
+                                    <div className="col-4 col-md-7 
+                                                    mr-0 mt-0 ml-0 mb-0
+                                                    pr-0 pt-0 pl-0 pb-0">
                                        <Logo />
                                     </div>
-                                    <div className="col-3 mt-1 order-md-2">
+                                    <div className="col-1 
+                                                    offset-5 ">
+                                        <button type="button" 
+                                                className=" navbar-toggler"
+                                                data-toggle="collapse" data-target="#menu-principal"
+                                                aria-controls="menu-principal" aria-expanded="false"
+                                                aria-label="Desplegar menu de navegacion">
+                                            <span className="navbar-toggler-icon "></span>
+                                        </button>
+                                    </div>
+                                </div>         
+                    </div>     {/*   termina La primera columna */}
+                    <div className="col-12 
+                                    col-md-6 
+                                    offset-md-1 offset-lg-2 ">  {/*   inicio segunda columna */}
+                        <div className="collapse navbar-collapse" id="menu-principal">
+                            <ul className="navbar-nav  ">
+                                <li className="nav-item
+                                                mr-0 mt-0 ml-0 mb-0
+                                                pr-0 pt-0 pl-0 pb-0">
                                     <ProductConsumer>
                                         { ( value) => (
                                                 <button type="button" className="btn text-white"
@@ -49,28 +82,13 @@ class Navbar extends Component {
                                                 </button>
                                          )}
                                     </ProductConsumer>
-                                    </div>
-                                    <div className="col-1 order-md-1">
-                                        <button type="button" className=" navbar-toggler "
-                                            data-toggle="collapse" data-target="#menu-principal"
-                                            aria-controls="menu-principal" aria-expanded="false"
-                                            aria-label="Desplegar menu de navegacion">
-                                            <span className="navbar-toggler-icon "></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>     {/*   termina La primera columna */}
-                    <div className="col-12 col-md-8 mt-md-2 col-lg-5  ">  {/*   inicio segunda columna */}
-                        <div className="collapse navbar-collapse" id="menu-principal">
-                            <ul className="navbar-nav  ">
-                                <li className="nav-item">
-                                    <Link to="/ProductList">
+                                </li>
+                                <li className="nav-item mr-2">
+                                    <Link to="/productList">
                                         Productos
                                     </Link>
                                 </li>
-                                { this.state.datos.map((dato, i)=>{
+                                 { this.state.datos.map((dato, i)=>{
                                      return(
                                         <li className="nav-item 
                                                   mt-2 mr-lg-2 " key={i}>
@@ -81,42 +99,51 @@ class Navbar extends Component {
                                        </li>
                                      )  
                                   })}
-                                <li className="nav-item">
+                                  <li className="nav-item">
                                     <ProductConsumer>
                                             { ( value) => (
-                                                
-                                                <a className="mt-1 mr-lg-2" href="#top"  
+                                                <a className={value.pintar} href="#top"  
                                                     onClick={()=>{
                                                             value.abrirLogin();
                                                             
                                                             }}>
                                                         {value.btnLogName}
-                                                    
-                                                    
-                                                </a>
+                                                 </a>
                                             )} 
                                     </ProductConsumer> 
-                                </li>                        
-                                <li className="nav-item">
-                                <ProductConsumer>
+                                </li>
+                                
+                                    <ProductConsumer>
                                         { ( value) => (
-                                            
-                                            <a href="#top" className={value.pintar}
-                                                onClick={()=>{
-                                                    value.abrirRegistro();
-                                                         }}>
-                                                Registrarse 
-                                            </a>
-                                               
+                                            <li className={value.pintarUserName}>
+                                                <User
+                                                    abrirLogin={value.abrirLogin}
+                                                />  
+                                                                                                                        
+                                            </li>
                                          )}
                                     </ProductConsumer>
-                               </li>
+                              
+                                <li className="nav-item">
+                                    <ProductConsumer>
+                                        { ( value) => (
+                                               
+                                                    <a href="#top" className={value.pintar}
+                                                        onClick={()=>{
+                                                            value.abrirRegistro();
+                                                                }}>
+                                                        Registrarse 
+                                                    </a>
+                                              
+                                         )}
+                                    </ProductConsumer>
+                                </li>
                                 <li className="nav-item">
                                         <CartContador/>
                                 </li>
                             </ul>
-                        </div>
-                    </div> {/*   fin segunda columna */}
+                         </div>  {/* terminar el contenido del boton hamburgesa */}
+                     </div> {/*   fin segunda columna */}
                 </div>
                
            </nav>

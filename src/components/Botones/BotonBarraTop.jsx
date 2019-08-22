@@ -14,9 +14,9 @@ class BotonBarraTop extends Component {
                                                         data-toggle="dropdown">
                                                 {datos.btnPadre}
                                         </a>
-                                        <div className="dropdown-menu">
-                                                        <a className="dropdown-item" href={datos.link1}>{datos.linkName1}</a>
-                                                        <a className="dropdown-item" href={datos.link2}>{datos.linkName2}</a>
+                                        <div className="dropdown-menu mt-3  ">
+                                                        <a className="dropdown-item " href={datos.link1}>{datos.linkName1}</a>
+                                                        <a className="dropdown-item " href={datos.link2}>{datos.linkName2}</a>
                                                         <a className="dropdown-item" href={datos.link3}>{datos.linkName3}</a>
                                                         <a className="dropdown-item" href={datos.link4}>{datos.linkName4}</a>
                                         </div>

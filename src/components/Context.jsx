@@ -25,6 +25,7 @@ export default class ProductProvider extends Component {
         modalProduct: [],
         modalBusquedaOpen: true,
         modalLoginOpen: false,
+        modalOpcionOpen: false,
         modalRegistroOpen: false,
         userLoginState: false,
         cartSubTotal: 0,
@@ -34,6 +35,7 @@ export default class ProductProvider extends Component {
         termino: '',
         btnLogName: 'Ingresar',
         pintarBtn: '',
+        pintarBtnUser: 'd-none',
         token: [],
 
 
@@ -46,13 +48,9 @@ export default class ProductProvider extends Component {
             this.sinUsuarioLogeado() ///// pendiente por logica de estados
             this.conUsuarioLogeado(tokenLocal)
         }
-
-
     }
-
     componentDidUpdate() {
         this.componenetesLocales()
-
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -93,12 +91,6 @@ export default class ProductProvider extends Component {
             JSON.stringify(this.state.token)
         )
     }
-
-
-
-
-
-
     ///////////////////////////////////////////////////////////////////////////
     sinUsuarioLogeado = () => {
 
@@ -308,9 +300,6 @@ export default class ProductProvider extends Component {
             }
         }
     }
-
-
-
     ////////////////////////////////////
     registrarUsuario = async (datos) => {
         if (datos !== undefined && datos !== null) {
@@ -351,15 +340,11 @@ export default class ProductProvider extends Component {
         const payload = jwt.decode(array, "SOLTEC-tecnologiaydesarrollo$")
 
         if (payload.sub !== undefined || payload.sub !== null) {
-            ///gaurdar el token
-
-            // const nombre = payload.sub[0].nombre
             this.setState(() => {
                 return {
                     userLoginState: true,
                     token: payload.sub[0]
                 }
-                //, userLoginState: array
             },
                 () => {
 
@@ -394,6 +379,28 @@ export default class ProductProvider extends Component {
         this.setState(() => {
             return { modalProduct: product, modalOpen: true }
         })
+    }
+    closeModal = id => {
+        this.setState(() => {
+            return { modalOpen: false }
+        })
+    }
+    
+     ///////////////////////////////////
+     openModalOpciones = () => {
+      
+        if(!this.state.modalOpcionOpen){
+           
+            this.setState(() => {
+            return { modalOpcionOpen:true }
+        })
+       }else{
+        
+        this.setState(() => {
+            return { modalOpcionOpen:false }
+        })
+       }
+        
     }
     closeModal = id => {
         this.setState(() => {
@@ -440,14 +447,16 @@ export default class ProductProvider extends Component {
             this.setState(() => {
                 return {
                     btnLogName: 'Salir',
-                    pintarBtn: 'd-none'
+                    pintarBtn: 'd-none',
+                    pintarBtnUser: ''
                 }
             })
         } else {
             this.setState(() => {
                 return {
                     btnLogName: 'Ingresar',
-                    pintarBtn: ''
+                    pintarBtn: '',
+                    pintarBtnUser: 'd-none'
                 }
             }, () => {
                 let tokenLocal = JSON.parse(localStorage.getItem('token'))
@@ -460,11 +469,7 @@ export default class ProductProvider extends Component {
             }
             )
         }
-
-
     }
-
-
     ////////////////////////////////////////
     addToCart = (id) => {
         let tempProducts = [...this.state.products];
@@ -486,7 +491,6 @@ export default class ProductProvider extends Component {
             }
         );
     };
-
 
     ///////////////////////////////////
     increment = (id) => {
@@ -558,40 +562,43 @@ export default class ProductProvider extends Component {
     }
 
     comprarCart = async () => {
-        const carrito = localStorage.getItem('cart');
-        const cart = JSON.parse(carrito)
-        const res = await axios.post('http://localhost:3001/carrito', cart)
-
-        if (res.data.res) {
-
-            /**
-             * valida que el total a pagar en el cliente sea igual al total calculado desde el server
-             */
-            if (res.data.total) {
-                if (this.state.cartTotal === res.data.total) {
-
-                    //aca va la redireccion, si el usuario no esta registrado abre formulario,
-                    //muestra al usuario el resumen del pedido y confirma el medio de pago
-                    this.setState(() => {
-                        return { cart: [] }
-                    }, () => {
-                        this.setProducts();
-                        this.addTotals();
-                    })
-                } else {
-                    console.log("Error al validar los totales");
-                }
-            }
+        const tokenLocal = JSON.parse(localStorage.getItem('token'))
+        if (tokenLocal.length === 0) {
+            this.openModalOpciones()
+        } else {
+            alert('comprar')
         }
+        // const carrito = localStorage.getItem('cart');
+        // const cart = JSON.parse(carrito)
+        // const res = await axios.post('http://localhost:3001/carrito', cart)
 
+        // if (res.data.res) {
+
+        //     /**
+        //      * valida que el total a pagar en el cliente sea igual al total calculado desde el server
+        //      */
+        //     if (res.data.total) {
+        //         if (this.state.cartTotal === res.data.total) {
+
+        //             //aca va la redireccion, si el usuario no esta registrado abre formulario,
+        //             //muestra al usuario el resumen del pedido y confirma el medio de pago
+        //             this.setState(() => {
+        //                 return { cart: [] }
+        //             }, () => {
+        //                 this.setProducts();
+        //                 this.addTotals();
+        //             })
+        //         } else {
+        //             console.log("Error al validar los totales");
+        //         }
+        //     }
+        // }
     }
 
     //////////////////////////////////////////////
-
     addTotals = () => {
         let subTotal = 0;
         this.state.cart.map(item => (subTotal += item.total));
-
         const tempTax = subTotal * 0.19;
         const tax = parseFloat(tempTax.toFixed(2));
         const total = subTotal;
@@ -614,6 +621,8 @@ export default class ProductProvider extends Component {
                 closeModal: this.closeModal,
                 abrirBusqueda: this.abrirModalBusqueda,
                 abrirLogin: this.abrirModalLogin,
+                modalOpcionOpen: this.state.modalOpcionOpen,
+                cambiarOpcionesModal: this.openModalOpciones,
                 cerrarLogin: this.cerrarModalLogin,
                 abrirRegistro: this.abrirModalRegistro,
                 cerrarRegistro: this.cerrarModalRegistro,
@@ -631,6 +640,8 @@ export default class ProductProvider extends Component {
                 cambiarNombreBtn: this.btnLoginName,
                 Name: this.btnLogName,
                 pintar: this.state.pintarBtn,
+                pintarUserName: this.state.pintarBtnUser,
+                tokenLocal: this.state.token,
             }}>
                 {this.props.children}
             </ProductContext.Provider>

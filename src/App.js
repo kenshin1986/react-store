@@ -14,6 +14,7 @@ import ModalSearch from './components/Modals/ModalSearch'
 import Modal from './components/Modals/Modal'
 import ModalLogin from './components/Modals/ModalLogin'
 import ModalRegistro from './components/Modals/ModalRegistro'
+import ModalOpcion from './components/Modals/ModalOpcion'
 import FormIngreso from './components/Formularios/FormIngreso'
 
 
@@ -39,7 +40,7 @@ class App extends Component {
         <ModalSearch/>
         <ModalLogin/>
         <ModalRegistro/>
-       
+        <ModalOpcion/>
         </BrowserRouter>
         
     );

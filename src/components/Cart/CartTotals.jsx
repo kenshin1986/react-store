@@ -44,7 +44,7 @@ class CartTotals extends Component {
           })
     }
     render() { 
-        const {cartSubtotal, cartTax, cartTotal} = this.props.value;
+        const {cartSubtotal, cartTax, cartTotal, comprarCart} = this.props.value;
 
         return (  
             
@@ -65,7 +65,7 @@ class CartTotals extends Component {
                         <button className="btn btn-outline-dark text-uppercase
                                 mb-3 px-5" 
                                 type="button"
-                                // onClick={() => comprarCart()}
+                                 onClick={() => comprarCart()}
                                 >
                                     Comprar
                                 </button>
