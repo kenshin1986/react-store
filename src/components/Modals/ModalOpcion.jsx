@@ -11,7 +11,8 @@ export default class ModalOpcion extends Component {
         return (
             <ProductConsumer>
             {(value) => {
-                const { modalOpcionOpen, } = value;
+                const { modalOpcionOpen, abrirRegistro, cambiarOpcionesModal,
+                        abrirLogin, btnLogName, cambiarOpcionNoRegistroModal } = value;
                // {/* const { modalOpcionOpen, cambiarOpcionesModal} = value; */}
                 if (!modalOpcionOpen) {
                     return null;
@@ -19,33 +20,46 @@ export default class ModalOpcion extends Component {
                     return(
                         <ModalContainer>
                             <div className="container">
-                            
-                                <div className="row">
-                                
+                                 <div className="row">
                                     <div  id="modal" 
                                         className="col-12 mx-auto 
                                                     col-md-6 
                                                     text-center text-capitalize p-5 mt-3">
-                                        <div class="card">
-                                            <div class="card-body">
-                                               <div className="row">
-                                                    <div className="col-12 mx-auto">
-                                                        <a href="#top" className="btn btn-outline-Dark">Logear</a> 
+                                             <div className="row mt-5  mx-auto ">
+                                                    <div className="col-12 ">
+                                                        <a href="#top" className="btn btn-block btn-outline-light mb-3"
+                                                            onClick={()=>{
+                                                            abrirLogin();
+                                                            cambiarOpcionesModal()
+                                                         }}>
+                                                        {btnLogName}
+                                                        </a> 
                                                    </div>
-                                                   <div className="col-12 mx-auto ">
-                                                        <a href="#top" className="btn btn-outline-Dark">Registrarse</a>  
+                                                   <div className="col-12 ">
+                                                        <a href="#top" className="btn btn-block btn-outline-light mb-3"
+                                                            onClick={()=>{
+                                                                abrirRegistro();
+                                                                cambiarOpcionesModal()
+                                                                    }}>
+                                                            Registrarse 
+                                                        </a>  
                                                    </div>
-                                                   <div className="col-12 mx-auto ">
-                                                        <a href="#top" className="btn btn-outline-Dark">Comprar Sin Registrarse</a> 
+                                                   <div className="col-12 ">
+                                                        <a href="#top" className="btn btn-block btn-outline-light mb-3" onClick={()=>{
+                                                            cambiarOpcionNoRegistroModal();
+                                                            cambiarOpcionesModal()
+                                                            }}>Comprar Sin Registrarse
+                                                        </a> 
                                                    </div>
-                                               </div>
-                                                
-                                                
-                                                 
-                                            </div>
-                                        </div>
-        
-                                                      
+                                                   <div className="col-12 ">
+                                                        <a href="#top" className="btn btn-block btn-outline-light mb-3"
+                                                            onClick={()=>{
+                                                                cambiarOpcionesModal()
+                                                                    }}>
+                                                            Cancelar
+                                                        </a> 
+                                                   </div>
+                                       </div>
                                     </div>
                                    
                                 </div>

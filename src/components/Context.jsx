@@ -26,6 +26,7 @@ export default class ProductProvider extends Component {
         modalBusquedaOpen: true,
         modalLoginOpen: false,
         modalOpcionOpen: false,
+        modalNoRegistro:false,
         modalRegistroOpen: false,
         userLoginState: false,
         cartSubTotal: 0,
@@ -387,26 +388,29 @@ export default class ProductProvider extends Component {
     }
     
      ///////////////////////////////////
-     openModalOpciones = () => {
+     toggleModalOpciones = () => {
       
-        if(!this.state.modalOpcionOpen){
+       this.setState({ modalOpcionOpen: !this.state.modalOpcionOpen})
+        
+    }
+   
+    //////////////////////////////////////
+    openModalnoRegistro = () => {
+      
+        if(!this.state.modalNoRegistro){
            
             this.setState(() => {
-            return { modalOpcionOpen:true }
+            return { modalNoRegistro:true }
         })
        }else{
         
         this.setState(() => {
-            return { modalOpcionOpen:false }
+            return { modalNoRegistro:false }
         })
        }
         
     }
-    closeModal = id => {
-        this.setState(() => {
-            return { modalOpen: false }
-        })
-    }
+   
     //////////////////////////////////////
     abrirModalLogin = () => {
         if (this.state.btnLogName !== 'Salir') {
@@ -564,7 +568,7 @@ export default class ProductProvider extends Component {
     comprarCart = async () => {
         const tokenLocal = JSON.parse(localStorage.getItem('token'))
         if (tokenLocal.length === 0) {
-            this.openModalOpciones()
+            this.toggleModalOpciones()
         } else {
             alert('comprar')
         }
@@ -622,7 +626,9 @@ export default class ProductProvider extends Component {
                 abrirBusqueda: this.abrirModalBusqueda,
                 abrirLogin: this.abrirModalLogin,
                 modalOpcionOpen: this.state.modalOpcionOpen,
-                cambiarOpcionesModal: this.openModalOpciones,
+                opcionNoRegistro: this.state.modalNoRegistro,
+                cambiarOpcionesModal: this.toggleModalOpciones,
+                cambiarOpcionNoRegistroModal: this.openModalnoRegistro,
                 cerrarLogin: this.cerrarModalLogin,
                 abrirRegistro: this.abrirModalRegistro,
                 cerrarRegistro: this.cerrarModalRegistro,
