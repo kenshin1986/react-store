@@ -75,9 +75,7 @@ class Navbar extends Component {
                                         { ( value) => (
                                                 <button type="button" className="btn text-white"
                                                     data-toggle="modal" data-target="#exampleModal"
-                                                     onClick={()=>{
-                                                           value.abrirBusqueda();
-                                                         }}>
+                                                     >
                                                     <i className="fas fa-search" />
                                                 </button>
                                          )}
@@ -104,7 +102,7 @@ class Navbar extends Component {
                                             { ( value) => (
                                                 <a className={value.pintar} href="#top"  
                                                     onClick={()=>{
-                                                            value.abrirLogin();
+                                                            value.toggleModalLogin();
                                                             
                                                             }}>
                                                         {value.btnLogName}
@@ -117,7 +115,7 @@ class Navbar extends Component {
                                         { ( value) => (
                                             <li className={value.pintarUserName}>
                                                 <User
-                                                    abrirLogin={value.abrirLogin}
+                                                    abrirLogin={value.toggleModalLogin}
                                                 />  
                                                                                                                         
                                             </li>
@@ -130,7 +128,7 @@ class Navbar extends Component {
                                                
                                                     <a href="#top" className={value.pintar}
                                                         onClick={()=>{
-                                                            value.abrirRegistro();
+                                                            value.toggleModalRegistro();
                                                                 }}>
                                                         Registrarse 
                                                     </a>

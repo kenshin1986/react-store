@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { ProductConsumer } from '../Context';
-import FormIngreso from '../Formularios/FormIngreso';
-
-
 
 export default class ModalOpcion extends Component {
 
@@ -11,10 +8,10 @@ export default class ModalOpcion extends Component {
         return (
             <ProductConsumer>
             {(value) => {
-                const { modalOpcionOpen, abrirRegistro, cambiarOpcionesModal,
-                        abrirLogin, btnLogName, cambiarOpcionNoRegistroModal } = value;
-               // {/* const { modalOpcionOpen, cambiarOpcionesModal} = value; */}
-                if (!modalOpcionOpen) {
+                const { modalOpcionState, toggleModalRegistro, toggleModalOpciones,
+                    toggleModalLogin, btnLogName, toggleModalnoRegistro } = value;
+             
+                if (!modalOpcionState) {
                     return null;
                 } else { 
                     return(
@@ -29,8 +26,8 @@ export default class ModalOpcion extends Component {
                                                     <div className="col-12 ">
                                                         <a href="#top" className="btn btn-block btn-outline-light mb-3"
                                                             onClick={()=>{
-                                                            abrirLogin();
-                                                            cambiarOpcionesModal()
+                                                                toggleModalLogin();
+                                                                toggleModalOpciones()
                                                          }}>
                                                         {btnLogName}
                                                         </a> 
@@ -38,23 +35,23 @@ export default class ModalOpcion extends Component {
                                                    <div className="col-12 ">
                                                         <a href="#top" className="btn btn-block btn-outline-light mb-3"
                                                             onClick={()=>{
-                                                                abrirRegistro();
-                                                                cambiarOpcionesModal()
+                                                                toggleModalRegistro();
+                                                                toggleModalOpciones()
                                                                     }}>
                                                             Registrarse 
                                                         </a>  
                                                    </div>
                                                    <div className="col-12 ">
                                                         <a href="#top" className="btn btn-block btn-outline-light mb-3" onClick={()=>{
-                                                            cambiarOpcionNoRegistroModal();
-                                                            cambiarOpcionesModal()
+                                                            toggleModalnoRegistro();
+                                                            toggleModalOpciones()
                                                             }}>Comprar Sin Registrarse
                                                         </a> 
                                                    </div>
                                                    <div className="col-12 ">
                                                         <a href="#top" className="btn btn-block btn-outline-light mb-3"
                                                             onClick={()=>{
-                                                                cambiarOpcionesModal()
+                                                                toggleModalOpciones()
                                                                     }}>
                                                             Cancelar
                                                         </a> 

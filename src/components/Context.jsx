@@ -23,11 +23,10 @@ export default class ProductProvider extends Component {
         datosUser: [],
         modalOpen: false,
         modalProduct: [],
-        modalBusquedaOpen: true,
-        modalLoginOpen: false,
-        modalOpcionOpen: false,
-        modalNoRegistro:false,
-        modalRegistroOpen: false,
+        modalLoginState: false,
+        modalOpcionState: false,
+        modalNoRegistroState:false,
+        modalRegistroState: false,
         userLoginState: false,
         cartSubTotal: 0,
         cartTax: 0,
@@ -149,7 +148,7 @@ export default class ProductProvider extends Component {
             }
         },
             () => {
-                this.cerrarModalLogin();
+                this.toggleModalLogin();
                 this.btnLoginName()
             }
         )
@@ -175,6 +174,7 @@ export default class ProductProvider extends Component {
             }
 
         } else {
+              /// pediente por arreglar busqueda *******
             if (categoria === undefined || categoria === null) {
 
                 this.setState(() => {
@@ -265,13 +265,10 @@ export default class ProductProvider extends Component {
     }
     //////////////////////////////////////
     datosBusqueda = (termino) => {
+       
         if (termino !== undefined && termino !== null) {
-            this.setState({
-                termino
-            }, () => {
-                //this.realizarBusqueda();
-                this.setProducts(termino);
-            })
+            this.setProducts(termino);
+            
         }
     }
     /////////////////////////////////////
@@ -349,7 +346,7 @@ export default class ProductProvider extends Component {
             },
                 () => {
 
-                    this.cerrarModalLogin()
+                    this.toggleModalLogin() 
                     this.llenarTokenLocal()
                     this.btnLoginName()
                 }
@@ -364,16 +361,7 @@ export default class ProductProvider extends Component {
             )
         }
     }
-
-
-
-    /////////////////////////////////////
-    abrirModalBusqueda = () => {
-        this.setState(() => {
-            return { modalBusquedaOpen: true }
-        })
-    }
-
+  
     ///////////////////////////////////
     openModal = id => {
         const product = this.getItem(id);
@@ -381,7 +369,7 @@ export default class ProductProvider extends Component {
             return { modalProduct: product, modalOpen: true }
         })
     }
-    closeModal = id => {
+    closeModal = () => {
         this.setState(() => {
             return { modalOpen: false }
         })
@@ -389,34 +377,18 @@ export default class ProductProvider extends Component {
     
      ///////////////////////////////////
      toggleModalOpciones = () => {
-      
-       this.setState({ modalOpcionOpen: !this.state.modalOpcionOpen})
-        
+       this.setState({ modalOpcionState: !this.state.modalOpcionState})
+     }
+   
+    //////////////////////////////////////
+    toggleModalnoRegistro = () => {
+        this.setState({ modalNoRegistroState: !this.state.modalNoRegistroState})
     }
    
     //////////////////////////////////////
-    openModalnoRegistro = () => {
-      
-        if(!this.state.modalNoRegistro){
-           
-            this.setState(() => {
-            return { modalNoRegistro:true }
-        })
-       }else{
-        
-        this.setState(() => {
-            return { modalNoRegistro:false }
-        })
-       }
-        
-    }
-   
-    //////////////////////////////////////
-    abrirModalLogin = () => {
+    toggleModalLogin = () => {
         if (this.state.btnLogName !== 'Salir') {
-            this.setState(() => {
-                return { modalLoginOpen: true }
-            })
+            this.setState({ modalLoginState: !this.state.modalLoginState})
         } else {
             this.setState(() => {
                 return { userLoginState: false }
@@ -426,24 +398,12 @@ export default class ProductProvider extends Component {
                     this.btnLoginName()
                 })
         }
+      
     }
-    cerrarModalLogin = () => {
-        this.setState(() => {
-            return { modalLoginOpen: false }
-        }
-        )
-    }
-
     ///////////////////////////////////
-    abrirModalRegistro = () => {
-        this.setState(() => {
-            return { modalRegistroOpen: true }
-        })
-    }
-    cerrarModalRegistro = () => {
-        this.setState(() => {
-            return { modalRegistroOpen: false }
-        })
+    toggleModalRegistro = () => {
+        this.setState({ modalRegistroState: !this.state.modalRegistroState})
+     
     }
     ///////////////////////////////////////////////
     btnLoginName = () => {
@@ -623,15 +583,15 @@ export default class ProductProvider extends Component {
                 addToCart: this.addToCart,
                 openModal: this.openModal,
                 closeModal: this.closeModal,
-                abrirBusqueda: this.abrirModalBusqueda,
-                abrirLogin: this.abrirModalLogin,
-                modalOpcionOpen: this.state.modalOpcionOpen,
-                opcionNoRegistro: this.state.modalNoRegistro,
-                cambiarOpcionesModal: this.toggleModalOpciones,
-                cambiarOpcionNoRegistroModal: this.openModalnoRegistro,
-                cerrarLogin: this.cerrarModalLogin,
-                abrirRegistro: this.abrirModalRegistro,
-                cerrarRegistro: this.cerrarModalRegistro,
+                toggleModalBusqueda: this.toggleModalBusqueda,
+                toggleModalLogin: this.toggleModalLogin,
+                modalOpcionOpen: this.state.modalOpcionState,
+                modalNoRegistroState: this.state.modalNoRegistroState,
+                modalLoginState: this.state.modalLoginState,
+                modalRegistroState: this.state.modalRegistroState,
+                toggleModalOpciones: this.toggleModalOpciones,
+                toggleModalnoRegistro: this.toggleModalnoRegistro,
+                toggleModalRegistro: this.toggleModalRegistro,
                 increment: this.increment,
                 decrement: this.decrement,
                 removeItem: this.removeItem,

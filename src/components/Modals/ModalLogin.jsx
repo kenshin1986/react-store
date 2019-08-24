@@ -11,8 +11,8 @@ export default class ModalLogin extends Component {
         return (
             <ProductConsumer>
             {(value) => {
-                const { modalLoginOpen} = value;
-                if (!modalLoginOpen) {
+                const { modalLoginState} = value;
+                if (!modalLoginState) {
                     return null;
                 } else { 
                     return(
@@ -28,7 +28,7 @@ export default class ModalLogin extends Component {
                                                 >
                                                          <FormIngreso 
                                                     login={value.login}
-                                                    cerrar={value.cerrarLogin} />
+                                                    cerrar={value.toggleModalLogin} />
                                            </div>
                                    
                                 </div>

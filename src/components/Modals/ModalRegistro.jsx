@@ -11,8 +11,8 @@ export default class ModalRegistro extends Component {
         return (
             <ProductConsumer>
             {(value) => {
-                const { modalRegistroOpen } = value;
-                       if (!modalRegistroOpen){
+                const { modalRegistroState } = value;
+                       if (!modalRegistroState){
                     return null;
                 } else { 
                     return(
@@ -28,7 +28,7 @@ export default class ModalRegistro extends Component {
                                                 >
                                                     <FormRegistro
                                                      registrar={value.registrar}
-                                                     cerrar={value.cerrarRegistro} />
+                                                     cerrar={value.toggleModalRegistro} />
                                                          {/* <FormIngreso 
                                                     login={value.login}
                                                     cerrar={value.cerrarLogin} /> */}

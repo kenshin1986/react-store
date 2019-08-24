@@ -7,10 +7,7 @@ export default class ModalSearch extends Component {
         return (
             <ProductConsumer>
                 {(value) => {
-                    const { modalBusquedaOpen } = value;
-                    if (!modalBusquedaOpen) {
-                        return null;
-                    } else {
+                   
                         return (
                             <div className="modal fade" id="exampleModal" tabIndex="-1"
                                 role="dialog" aria-labelledby="exampleModalLabel"
@@ -40,7 +37,7 @@ export default class ModalSearch extends Component {
                                 </div>
                             </div>
                         )
-                    }
+                    
                 }
                 }
             </ProductConsumer>

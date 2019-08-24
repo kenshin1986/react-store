@@ -11,8 +11,8 @@ export default class ModalNoRegistro extends Component {
         return (
             <ProductConsumer>
             {(value) => {
-                const { opcionNoRegistro, cambiarOpcionNoRegistroModal } = value;
-                       if (!opcionNoRegistro){
+                const { modalNoRegistroState, toggleModalnoRegistro } = value;
+                       if (!modalNoRegistroState){
                     return null;
                 } else { 
                     return(
@@ -27,7 +27,7 @@ export default class ModalNoRegistro extends Component {
                                                     text-center text-capitalize p-5 mt-2" 
                                                 >
                                                     <FormNoRegistro
-                                                        cerrar={cambiarOpcionNoRegistroModal}
+                                                        cerrar={toggleModalnoRegistro}
                                                       />
                                                     {/* <FormNoRegistro
                                                      registrar={value.registrar}
