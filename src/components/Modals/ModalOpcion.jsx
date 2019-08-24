@@ -1,75 +1,68 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { ProductConsumer } from '../Context';
+import { ProductContext } from '../Context';
 
 export default class ModalOpcion extends Component {
 
     render() {
+        const { modalOpcionState, toggleModalRegistro, 
+                toggleModalOpciones, toggleModalLogin, 
+                btnLogName, toggleModalnoRegistro } = this.context;
         return (
-            <ProductConsumer>
-            {(value) => {
-                const { modalOpcionState, toggleModalRegistro, toggleModalOpciones,
-                    toggleModalLogin, btnLogName, toggleModalnoRegistro } = value;
-             
-                if (!modalOpcionState) {
-                    return null;
-                } else { 
-                    return(
-                        <ModalContainer>
-                            <div className="container">
-                                 <div className="row">
-                                    <div  id="modal" 
-                                        className="col-12 mx-auto 
-                                                    col-md-6 
-                                                    text-center text-capitalize p-5 mt-3">
-                                             <div className="row mt-5  mx-auto ">
-                                                    <div className="col-12 ">
-                                                        <a href="#top" className="btn btn-block btn-outline-light mb-3"
-                                                            onClick={()=>{
-                                                                toggleModalLogin();
-                                                                toggleModalOpciones()
-                                                         }}>
-                                                        {btnLogName}
-                                                        </a> 
-                                                   </div>
-                                                   <div className="col-12 ">
-                                                        <a href="#top" className="btn btn-block btn-outline-light mb-3"
-                                                            onClick={()=>{
-                                                                toggleModalRegistro();
-                                                                toggleModalOpciones()
-                                                                    }}>
-                                                            Registrarse 
-                                                        </a>  
-                                                   </div>
-                                                   <div className="col-12 ">
-                                                        <a href="#top" className="btn btn-block btn-outline-light mb-3" onClick={()=>{
-                                                            toggleModalnoRegistro();
-                                                            toggleModalOpciones()
-                                                            }}>Comprar Sin Registrarse
-                                                        </a> 
-                                                   </div>
-                                                   <div className="col-12 ">
-                                                        <a href="#top" className="btn btn-block btn-outline-light mb-3"
-                                                            onClick={()=>{
-                                                                toggleModalOpciones()
-                                                                    }}>
-                                                            Cancelar
-                                                        </a> 
-                                                   </div>
-                                       </div>
-                                    </div>
-                                   
+            !modalOpcionState ?  null 
+            :  
+            <ModalContainer>
+                <div className="container">
+                    <div className="row">
+                        <div  id="modal" 
+                                className="col-12 mx-auto 
+                                    col-md-6 
+                                    text-center text-capitalize p-5 mt-3">
+                            <div className="row mt-5  mx-auto ">
+                                <div className="col-12 ">
+                                    <a href="#top" className="btn btn-block btn-outline-light mb-3"
+                                            onClick={()=>{
+                                                toggleModalLogin();
+                                                toggleModalOpciones()
+                                         }}>
+                                        {btnLogName}
+                                    </a> 
+                                </div>
+                                <div className="col-12 ">
+                                    <a href="#top" className="btn btn-block btn-outline-light mb-3"
+                                            onClick={()=>{
+                                                toggleModalRegistro();
+                                                toggleModalOpciones()
+                                                    }}>
+                                            Registrarse 
+                                    </a>  
+                                </div>
+                                <div className="col-12 ">
+                                    <a href="#top" className="btn btn-block btn-outline-light mb-3" onClick={()=>{
+                                            toggleModalnoRegistro();
+                                            toggleModalOpciones()
+                                            }}>Comprar Sin Registrarse
+                                    </a> 
+                                </div>
+                                <div className="col-12 ">
+                                    <a href="#top" className="btn btn-block btn-outline-light mb-3"
+                                            onClick={()=>{
+                                                toggleModalOpciones()
+                                                    }}>
+                                            Cancelar
+                                    </a> 
                                 </div>
                             </div>
-                        </ModalContainer>
-                           ); 
-                        }
-                    }
-                }
-            </ProductConsumer>
+                        </div>
+                    </div>
+                </div>
+            </ModalContainer>
+             
+               
         );
     }
 }
+ModalOpcion.contextType= ProductContext;
 const ModalContainer = styled.div`
     position: fixed;
     top: 35px;

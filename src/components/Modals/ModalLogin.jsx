@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { ProductConsumer } from '../Context';
+import { ProductContext } from '../Context';
+
 import FormIngreso from '../Formularios/FormIngreso';
 
 
@@ -8,40 +9,31 @@ import FormIngreso from '../Formularios/FormIngreso';
 export default class ModalLogin extends Component {
 
     render() {
+        const {modalLoginState, login, toggleModalLogin}= this.context;
+       
         return (
-            <ProductConsumer>
-            {(value) => {
-                const { modalLoginState} = value;
-                if (!modalLoginState) {
-                    return null;
-                } else { 
-                    return(
-                        <ModalContainer>
+                !modalLoginState ?  null 
+                    :   <ModalContainer>
                             <div className="container">
-                            
                                 <div className="row">
-                                
                                     <div  id="modal" 
-                                        className="col-12 mx-auto 
-                                                    col-md-6 
-                                                    text-center text-capitalize p-5 mt-3" 
+                                         className=" col-12 mx-auto 
+                                                col-md-6 
+                                                text-center text-capitalize p-5 mt-3" 
                                                 >
-                                                         <FormIngreso 
-                                                    login={value.login}
-                                                    cerrar={value.toggleModalLogin} />
-                                           </div>
-                                   
+                                                <FormIngreso 
+                                                 login={login}
+                                                 cerrar={toggleModalLogin} />
+                                    </div>
                                 </div>
                             </div>
                         </ModalContainer>
-                           ); 
-                        }
-                    }
-                }
-            </ProductConsumer>
         );
+    
     }
 }
+ModalLogin.contextType= ProductContext;
+
 const ModalContainer = styled.div`
     position: fixed;
     top: 35px;

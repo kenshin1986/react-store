@@ -100,33 +100,33 @@ class Navbar extends Component {
                                   <li className="nav-item">
                                     <ProductConsumer>
                                             { ( value) => (
-                                                <a className={value.pintar} href="#top"  
+                                                <a className={value.pintarBtnLogReg} href="#top"  
                                                     onClick={()=>{
                                                             value.toggleModalLogin();
-                                                            
                                                             }}>
-                                                        {value.btnLogName}
+                                                        Ingresar
                                                  </a>
                                             )} 
                                     </ProductConsumer> 
                                 </li>
                                 
+                                
                                     <ProductConsumer>
                                         { ( value) => (
-                                            <li className={value.pintarUserName}>
+                                            <li className={value.pintarBtnUser}>
                                                 <User
-                                                    abrirLogin={value.toggleModalLogin}
+                                                    destruirSesion={value.destruirSesion}
                                                 />  
-                                                                                                                        
                                             </li>
                                          )}
                                     </ProductConsumer>
+                                   
                               
                                 <li className="nav-item">
                                     <ProductConsumer>
                                         { ( value) => (
                                                
-                                                    <a href="#top" className={value.pintar}
+                                                    <a href="#top" className={value.pintarBtnLogReg}
                                                         onClick={()=>{
                                                             value.toggleModalRegistro();
                                                                 }}>

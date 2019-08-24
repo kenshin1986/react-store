@@ -4,7 +4,8 @@ import React, { Component } from 'react'
 class User extends Component {
     state = {}
     render() {
-        const { abrirLogin } = this.props;
+        const { destruirSesion } = this.props;
+       
         return (
             <React.Fragment>
                 <div className="dropdown">
@@ -19,7 +20,7 @@ class User extends Component {
                     <div className="dropdown-menu mt-3 ">
                     <a className="dropdown-item mt-1 mr-lg-2 text-black" href="#top"  
                                 onClick={()=>{
-                                abrirLogin();
+                                    destruirSesion();
                                 }}>
                                 Salir
                       </a>

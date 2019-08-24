@@ -8,7 +8,7 @@ import jwt from 'jwt-simple'
 
 
 // creamos el context
-const ProductContext = React.createContext();
+export const  ProductContext = React.createContext();
 // contiene 2 metodos
 // provider se usara para pasar los datos, estados, funciones, etc
 // consumer se aplica en la clase donde se van a usar esos datos
@@ -33,16 +33,16 @@ export default class ProductProvider extends Component {
         cartTotal: 0,
         cantidad: 0,
         termino: '',
-        btnLogName: 'Ingresar',
-        pintarBtn: '',
+        pintarBtnLogReg: '',
         pintarBtnUser: 'd-none',
         token: [],
 
 
     };
     componentDidMount() {
+        this.llenarTokenLocal()
         const tokenLocal = JSON.parse(localStorage.getItem('token'))
-        if (tokenLocal.length === 0) {
+        if (tokenLocal === undefined || tokenLocal === null) {
             this.sinUsuarioLogeado()
         } else {
             this.sinUsuarioLogeado() ///// pendiente por logica de estados
@@ -82,14 +82,41 @@ export default class ProductProvider extends Component {
 
             JSON.stringify(this.state.cartTotal)
         )
-        this.llenarTokenLocal()
-    }
-
-    llenarTokenLocal = () => {
         localStorage.setItem(
             'token',
             JSON.stringify(this.state.token)
         )
+      
+    }
+
+    llenarTokenLocal = () => {
+        const tokenLocal = JSON.parse(localStorage.getItem('token'))
+        if(this.state.token.length !==0 && this.state.token !==null && this.state.token !==''){
+          
+            localStorage.setItem(
+                'token',
+                JSON.stringify(this.state.token)
+            )
+            localStorage.setItem(
+                'LocaluserLoginState',
+                JSON.stringify(
+                    this.setState({
+                    LocaluserLoginState: true
+                }))
+            )
+        }else{
+            if (tokenLocal !== undefined && tokenLocal !== null && tokenLocal.length !== 0) {
+              
+                localStorage.setItem(
+                    'LocaluserLoginState',
+                    JSON.stringify(
+                        this.setState({
+                        LocaluserLoginState: true
+                    }))
+                )
+                this.crearSesion()    
+            }
+        }
     }
     ///////////////////////////////////////////////////////////////////////////
     sinUsuarioLogeado = () => {
@@ -143,14 +170,9 @@ export default class ProductProvider extends Component {
     conUsuarioLogeado = (tokenLocal) => {
         this.setState(() => {
             return {
-                userLoginState: true,
-                token: tokenLocal
+                  token: tokenLocal
             }
-        },
-            () => {
-                this.toggleModalLogin();
-                this.btnLoginName()
-            }
+        }
         )
     }
 
@@ -289,12 +311,9 @@ export default class ProductProvider extends Component {
                     footer: 'Tienes Problemas para Ingresar?'
                 })
                 return null;
-            }
-            if (json.data.token) {
+            }else{
                 this.asignarUsuario(json.data.token)
-
-            } else {
-                alert('no login')
+                this.toggleModalLogin()
             }
         }
     }
@@ -321,10 +340,11 @@ export default class ProductProvider extends Component {
 
                 Swal.fire(
                     'Registro Exitoso!',
-                    'rr',
+                    'por arreglar',
                     'success'
                 )
                 this.asignarUsuario(json.data.token)
+                this.toggleModalRegistro()
 
             } else {
                 alert('no login')
@@ -333,10 +353,8 @@ export default class ProductProvider extends Component {
     }
     /////////////////////////////////////////
     asignarUsuario = (token) => {
-
         const array = token.split(" ")[0]
         const payload = jwt.decode(array, "SOLTEC-tecnologiaydesarrollo$")
-
         if (payload.sub !== undefined || payload.sub !== null) {
             this.setState(() => {
                 return {
@@ -345,15 +363,12 @@ export default class ProductProvider extends Component {
                 }
             },
                 () => {
-
-                    this.toggleModalLogin() 
                     this.llenarTokenLocal()
-                    this.btnLoginName()
+                    this.crearSesion()
                 }
             )
             let tokenLocal = JSON.parse(localStorage.getItem('token'))
             let nombre = tokenLocal.nombre
-
             Swal.fire(
                 'Bienvenido!',
                 nombre,
@@ -386,53 +401,44 @@ export default class ProductProvider extends Component {
     }
    
     //////////////////////////////////////
+    
     toggleModalLogin = () => {
-        if (this.state.btnLogName !== 'Salir') {
-            this.setState({ modalLoginState: !this.state.modalLoginState})
-        } else {
-            this.setState(() => {
-                return { userLoginState: false }
-                //, userLoginState: array
-            },
-                () => {
-                    this.btnLoginName()
-                })
-        }
-      
+        this.setState({ modalLoginState: !this.state.modalLoginState})
     }
     ///////////////////////////////////
     toggleModalRegistro = () => {
         this.setState({ modalRegistroState: !this.state.modalRegistroState})
-     
     }
     ///////////////////////////////////////////////
-    btnLoginName = () => {
-        if (this.state.userLoginState) {
-            this.setState(() => {
-                return {
-                    btnLogName: 'Salir',
-                    pintarBtn: 'd-none',
+    crearSesion = () => {
+        this.setState(() => {
+            return {
+                    pintarBtnLogReg: 'd-none',
                     pintarBtnUser: ''
-                }
-            })
-        } else {
-            this.setState(() => {
-                return {
-                    btnLogName: 'Ingresar',
-                    pintarBtn: '',
-                    pintarBtnUser: 'd-none'
-                }
-            }, () => {
-                let tokenLocal = JSON.parse(localStorage.getItem('token'))
-                let nombre = tokenLocal.nombre
-                Swal.fire('Ha Cerrado Sesion \n'+ nombre)
-                this.setState(() => {
-                    return { token: [] } 
-                    /// aqui se deben resetear los estados a 0 ********************************
-                })
             }
+         })
+    }
+
+    destruirSesion =() =>{
+        this.setState(() => {
+            return {
+                pintarBtnLogReg: '',
+                pintarBtnUser: 'd-none'
+            }
+        }, () => {
+            let tokenLocal = JSON.parse(localStorage.getItem('token'))
+            let nombre = tokenLocal.nombre
+            Swal.fire('Has Cerrado Sesion \n'+ nombre)
+            this.setState(() => {
+                return { token: [] } 
+                /// aqui se deben resetear los estados a 0 ********************************
+            })
+            localStorage.setItem(
+                'token',
+                JSON.stringify(this.state.token)
             )
         }
+        )
     }
     ////////////////////////////////////////
     addToCart = (id) => {
@@ -527,7 +533,7 @@ export default class ProductProvider extends Component {
 
     comprarCart = async () => {
         const tokenLocal = JSON.parse(localStorage.getItem('token'))
-        if (tokenLocal.length === 0) {
+        if (tokenLocal === null) {
             this.toggleModalOpciones()
         } else {
             alert('comprar')
@@ -603,10 +609,11 @@ export default class ProductProvider extends Component {
                 login: this.login,
                 registrar: this.registrarUsuario,
                 stateUser: this.userLoginState,
-                cambiarNombreBtn: this.btnLoginName,
+                cambiarNombreBtn: this.crearSesion,
+                destruirSesion: this.destruirSesion,
                 Name: this.btnLogName,
-                pintar: this.state.pintarBtn,
-                pintarUserName: this.state.pintarBtnUser,
+                pintarBtnLogReg: this.state.pintarBtnLogReg,
+                pintarBtnUser: this.state.pintarBtnUser,
                 tokenLocal: this.state.token,
             }}>
                 {this.props.children}
