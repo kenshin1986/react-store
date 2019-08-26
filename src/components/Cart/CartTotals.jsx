@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import Swal from 'sweetalert2'
 
-class CartTotals extends Component {
+export default class CartTotals extends Component {
     aviso = () =>{ 
         const {clearCart, reset} = this.props.value;
         const swalWithBootstrapButtons = Swal.mixin({
@@ -12,8 +12,7 @@ class CartTotals extends Component {
             },
             buttonsStyling: false,
           })
-          
-          swalWithBootstrapButtons.fire({
+        swalWithBootstrapButtons.fire({
             title: ' Vaciar El Carrito?',
             text: "Perdera Su Lista De Productos!",
             type: 'warning',
@@ -29,11 +28,9 @@ class CartTotals extends Component {
                 'Vaciado!',
                 'Tu Lista Ha Sido Eliminada.',
                 'success'
-               
               )
             } else if (
-              // Read more about handling dismissals
-              result.dismiss === Swal.DismissReason.cancel
+               result.dismiss === Swal.DismissReason.cancel
             ) {
               swalWithBootstrapButtons.fire(
                 'Cancelado',
@@ -45,54 +42,57 @@ class CartTotals extends Component {
     }
     render() { 
         const {cartSubtotal, cartTax, cartTotal, comprarCart} = this.props.value;
-
         return (  
-            
             <React.Fragment>
-            <div className="container">
-                <div className="row">
-                    <div className="col-10 mt-2 ml-sm-5 ml-md-auto
-                            col-sm-8 text-capitalize text-right">
-                        <Link to="/Cart">
-                            <button className="btn btn-outline-danger text-uppercase
-                                mb-3 px-5 mr-2" 
-                                type="button"
-                                onClick={() => this.aviso()}
-                                >
-                                    Eliminar Articulos
+                <div className="container">
+                    <div className="row">
+                        <div className="col-10 mt-2 ml-sm-5 ml-md-auto
+                                col-sm-8 text-capitalize text-right">
+                            <Link to="/Cart">
+                                <button className="btn btn-outline-danger text-uppercase
+                                    mb-3 px-5 mr-2" 
+                                        type="button"
+                                     onClick={() => this.aviso()}>
+                                        Eliminar Articulos
                                 </button>
-                        </Link>
-                        <button className="btn btn-outline-dark text-uppercase
-                                mb-3 px-5" 
-                                type="button"
-                                 onClick={() => comprarCart()}
-                                >
-                                    Comprar
-                                </button>
-                        <h5>
-                            <span className="text-title">
-                                subtotal : 
-                            </span> <strong>$ {cartSubtotal}</strong>
-                        </h5>
-                        <h5>
-                            <span className="text-title">
-                                IVA : 
-                            </span> <strong>$ {cartTax}</strong>
-                        </h5>
-                        <h5>
-                            <span className="text-title">
-                                total : 
-                            </span> <strong>$ {cartTotal}</strong>
-                        </h5>
-                        
+                            </Link>
+                            <button className="btn btn-outline-dark text-uppercase
+                                    mb-3 px-5" 
+                                        type="button"
+                                     onClick={() => comprarCart()}>
+                                        Comprar
+                            </button>
+                            <h5>
+                                <span className="text-title">
+                                    subtotal : 
+                                </span>
+                                <strong>
+                                    $ {cartSubtotal}
+                                </strong>
+                            </h5>
+                            <h5>
+                                <span className="text-title">
+                                    IVA : 
+                                </span>
+                                <strong>
+                                    $ {cartTax}
+                                </strong>
+                            </h5>
+                            <h5>
+                                <span className="text-title">
+                                    total : 
+                                </span>
+                                <strong>
+                                    $ {cartTotal}
+                                </strong>
+                            </h5>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </React.Fragment>
-
+            </React.Fragment>
         );
     }
 }
  
-export default CartTotals;
+
 

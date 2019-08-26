@@ -7,14 +7,21 @@ export default class ModalOpcion extends Component {
     render() {
         const { modalOpcionState, toggleModalRegistro, 
                 toggleModalOpciones, toggleModalLogin, 
-                btnLogName, toggleModalnoRegistro } = this.context;
+                toggleModalnoRegistro } = this.context;
         return (
             !modalOpcionState ?  null 
             :  
-            <ModalContainer>
-                <div className="container">
-                    <div className="row">
-                        <div  id="modal" 
+            <ModalContainer  onClick={ 
+                (e) =>{
+                    if(  e.target.className === 'sc-bxivhb dhUoWh' ||
+                            e.target.id === 'cont' ||
+                            e.target.id === 'fila' ){ 
+                            toggleModalOpciones();
+                    }
+                }} >
+                    <div className="container container-fluid" id="cont">
+                        <div className="row " id="fila">
+                            <div       id="modal" 
                                 className="col-12 mx-auto 
                                     col-md-6 
                                     text-center text-capitalize p-5 mt-3">
@@ -25,7 +32,7 @@ export default class ModalOpcion extends Component {
                                                 toggleModalLogin();
                                                 toggleModalOpciones()
                                          }}>
-                                        {btnLogName}
+                                        Ingresar
                                     </a> 
                                 </div>
                                 <div className="col-12 ">
@@ -40,16 +47,15 @@ export default class ModalOpcion extends Component {
                                 <div className="col-12 ">
                                     <a href="#top" className="btn btn-block btn-outline-light mb-3" onClick={()=>{
                                             toggleModalnoRegistro();
-                                            toggleModalOpciones()
-                                            }}>Comprar Sin Registrarse
+                                            toggleModalOpciones()}}>
+                                        Comprar Sin Registrarse
                                     </a> 
                                 </div>
                                 <div className="col-12 ">
                                     <a href="#top" className="btn btn-block btn-outline-light mb-3"
                                             onClick={()=>{
-                                                toggleModalOpciones()
-                                                    }}>
-                                            Cancelar
+                                                toggleModalOpciones()}}>
+                                        Cancelar
                                     </a> 
                                 </div>
                             </div>
@@ -57,8 +63,6 @@ export default class ModalOpcion extends Component {
                     </div>
                 </div>
             </ModalContainer>
-             
-               
         );
     }
 }

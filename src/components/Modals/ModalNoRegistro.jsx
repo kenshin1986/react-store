@@ -1,53 +1,44 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { ProductConsumer } from '../Context';
+import { ProductContext } from '../Context';
 import FormNoRegistro from '../Formularios/FormNoRegistro';
-
-
 
 export default class ModalNoRegistro extends Component {
 
     render() {
+        const {modalNoRegistroState, toggleModalnoRegistro}= this.context;
         return (
-            <ProductConsumer>
-            {(value) => {
-                const { modalNoRegistroState, toggleModalnoRegistro } = value;
-                       if (!modalNoRegistroState){
-                    return null;
-                } else { 
-                    return(
-                        <ModalContainer>
-                            <div className="container">
-                            
-                                <div className="row">
-                                
-                                    <div  id="modal" 
-                                        className="col-12 mx-auto 
-                                                    col-md-6 
-                                                    text-center text-capitalize p-5 mt-2" 
-                                                >
-                                                    <FormNoRegistro
-                                                        cerrar={toggleModalnoRegistro}
-                                                      />
-                                                    {/* <FormNoRegistro
-                                                     registrar={value.registrar}
-                                                     cerrar={} /> */}
-                                                         {/* <FormIngreso 
-                                                    login={value.login}
-                                                    cerrar={value.cerrarLogin} /> */}
-                                           </div>
-                                   
-                                </div>
-                            </div>
-                        </ModalContainer>
-                           ); 
+            !modalNoRegistroState ?  null 
+                :
+                <ModalContainer  onClick={ 
+                    (e) =>{
+                        if(  e.target.className === 'sc-bxivhb dhUoWh' ||
+                                e.target.id === 'cont' ||
+                                e.target.id === 'fila'  ||
+                                e.target.id === 'modal'){ 
+                                toggleModalnoRegistro();
                         }
-                    }
-                }
-            </ProductConsumer>
+                    }} >
+                        <div className="container container-fluid" id="cont">
+                            <div className="row " id="fila">
+                                <div        id="modal" 
+                                className="col-12 mx-auto 
+                                            col-md-6 
+                                            text-center 
+                                            text-capitalize 
+                                            p-5 mt-2">
+                                <FormNoRegistro
+                                    cerrar={toggleModalnoRegistro}/>
+                                           
+                            </div>
+                        </div>
+                    </div>
+                </ModalContainer>
         );
     }
 }
+ModalNoRegistro.contextType= ProductContext;
+
 const ModalContainer = styled.div`
     position: fixed;
     top: 35px;

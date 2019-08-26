@@ -4,8 +4,7 @@ import React, { Component } from 'react'
 class User extends Component {
     state = {}
     render() {
-        const { destruirSesion } = this.props;
-       
+        const { actualizarSesionState } = this.props;
         return (
             <React.Fragment>
                 <div className="dropdown">
@@ -20,12 +19,10 @@ class User extends Component {
                     <div className="dropdown-menu mt-3 ">
                     <a className="dropdown-item mt-1 mr-lg-2 text-black" href="#top"  
                                 onClick={()=>{
-                                    destruirSesion();
-                                }}>
-                                Salir
+                                    actualizarSesionState() }}>
+                         Salir
                       </a>
                         <a className="dropdown-item " href="#top">Aministrar</a>
-                        
                     </div>
                 </div>
             </React.Fragment>

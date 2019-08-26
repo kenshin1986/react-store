@@ -13,16 +13,24 @@ export default class ModalLogin extends Component {
        
         return (
                 !modalLoginState ?  null 
-                    :   <ModalContainer>
-                            <div className="container">
-                                <div className="row">
-                                    <div  id="modal" 
-                                         className=" col-12 mx-auto 
-                                                col-md-6 
-                                                text-center text-capitalize p-5 mt-3" 
-                                                >
+                    :   <ModalContainer  onClick={ 
+                        (e) =>{
+                            if(  e.target.className === 'sc-bxivhb dhUoWh' ||
+                                    e.target.id === 'cont' ||
+                                    e.target.id === 'fila'  ||
+                                    e.target.id === 'modal'){ 
+                                toggleModalLogin();
+                            }
+                        }} >
+                            <div className="container container-fluid" id="cont">
+                                <div className="row " id="fila">
+                                    <div        id="modal"
+                                         className="col-12 mx-auto 
+                                                    col-md-6 
+                                                    text-center 
+                                                    text-capitalize p-5 mt-3">
                                                 <FormIngreso 
-                                                 login={login}
+                                                  login={login}
                                                  cerrar={toggleModalLogin} />
                                     </div>
                                 </div>

@@ -33,8 +33,7 @@ export default class ProductProvider extends Component {
         cartTotal: 0,
         cantidad: 0,
         termino: '',
-        pintarBtnLogReg: '',
-        pintarBtnUser: 'd-none',
+        pintarBtnBar: true,
         token: [],
 
 
@@ -114,7 +113,7 @@ export default class ProductProvider extends Component {
                         LocaluserLoginState: true
                     }))
                 )
-                this.crearSesion()    
+                this.actualizarSesionState()    
             }
         }
     }
@@ -364,7 +363,7 @@ export default class ProductProvider extends Component {
             },
                 () => {
                     this.llenarTokenLocal()
-                    this.crearSesion()
+                    this.actualizarSesionState()
                 }
             )
             let tokenLocal = JSON.parse(localStorage.getItem('token'))
@@ -410,35 +409,27 @@ export default class ProductProvider extends Component {
         this.setState({ modalRegistroState: !this.state.modalRegistroState})
     }
     ///////////////////////////////////////////////
-    crearSesion = () => {
-        this.setState(() => {
-            return {
-                    pintarBtnLogReg: 'd-none',
-                    pintarBtnUser: ''
-            }
-         })
-    }
-
-    destruirSesion =() =>{
-        this.setState(() => {
-            return {
-                pintarBtnLogReg: '',
-                pintarBtnUser: 'd-none'
-            }
-        }, () => {
-            let tokenLocal = JSON.parse(localStorage.getItem('token'))
-            let nombre = tokenLocal.nombre
-            Swal.fire('Has Cerrado Sesion \n'+ nombre)
-            this.setState(() => {
-                return { token: [] } 
-                /// aqui se deben resetear los estados a 0 ********************************
+    actualizarSesionState =() =>{
+        
+        if(this.state.pintarBtnBar){
+            this.setState({ pintarBtnBar: !this.state.pintarBtnBar})
+        }else{
+            this.setState({ pintarBtnBar: !this.state.pintarBtnBar},
+            () => {
+                let tokenLocal = JSON.parse(localStorage.getItem('token'))
+                let nombre = tokenLocal.nombre
+                Swal.fire('Has Cerrado Sesion \n'+ nombre)
+                this.setState(() => {
+                    return { token: [] } 
+                    /// aqui se deben resetear los estados a 0 ********************************
+                })
+                localStorage.setItem(
+                    'token',
+                    JSON.stringify(this.state.token)
+                )
             })
-            localStorage.setItem(
-                'token',
-                JSON.stringify(this.state.token)
-            )
         }
-        )
+        
     }
     ////////////////////////////////////////
     addToCart = (id) => {
@@ -533,7 +524,9 @@ export default class ProductProvider extends Component {
 
     comprarCart = async () => {
         const tokenLocal = JSON.parse(localStorage.getItem('token'))
-        if (tokenLocal === null) {
+        console.log('trae'+tokenLocal)
+       
+        if (tokenLocal === null || tokenLocal.length ===0  ) {
             this.toggleModalOpciones()
         } else {
             alert('comprar')
@@ -589,13 +582,13 @@ export default class ProductProvider extends Component {
                 addToCart: this.addToCart,
                 openModal: this.openModal,
                 closeModal: this.closeModal,
-                toggleModalBusqueda: this.toggleModalBusqueda,
-                toggleModalLogin: this.toggleModalLogin,
                 modalOpcionOpen: this.state.modalOpcionState,
                 modalNoRegistroState: this.state.modalNoRegistroState,
                 modalLoginState: this.state.modalLoginState,
                 modalRegistroState: this.state.modalRegistroState,
                 toggleModalOpciones: this.toggleModalOpciones,
+                toggleModalBusqueda: this.toggleModalBusqueda,
+                toggleModalLogin: this.toggleModalLogin,
                 toggleModalnoRegistro: this.toggleModalnoRegistro,
                 toggleModalRegistro: this.toggleModalRegistro,
                 increment: this.increment,
@@ -609,11 +602,8 @@ export default class ProductProvider extends Component {
                 login: this.login,
                 registrar: this.registrarUsuario,
                 stateUser: this.userLoginState,
-                cambiarNombreBtn: this.crearSesion,
-                destruirSesion: this.destruirSesion,
-                Name: this.btnLogName,
-                pintarBtnLogReg: this.state.pintarBtnLogReg,
-                pintarBtnUser: this.state.pintarBtnUser,
+                actualizarSesionState: this.actualizarSesionState,
+                pintarBtnBar: this.state.pintarBtnBar,
                 tokenLocal: this.state.token,
             }}>
                 {this.props.children}
