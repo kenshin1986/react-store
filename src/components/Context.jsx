@@ -27,7 +27,10 @@ export default class ProductProvider extends Component {
         modalOpcionState: false,
         modalNoRegistroState:false,
         modalRegistroState: false,
+        ModalOptPagoState: false,
         userLoginState: false,
+        redirecPagoState: false,
+        paypalState: false,
         cartSubTotal: 0,
         cartTax: 0,
         cartTotal: 0,
@@ -301,7 +304,7 @@ export default class ProductProvider extends Component {
             const json = await axios.post(url, { datos })
                 .catch(err => { console.log(err) })
             const res = json.data.res
-            console.log(res)
+            
             if (res) {
                 Swal.fire({
                     type: 'error',
@@ -313,6 +316,9 @@ export default class ProductProvider extends Component {
             }else{
                 this.asignarUsuario(json.data.token)
                 this.toggleModalLogin()
+                if(this.state.redirecPagoState){
+                    this.toggleModalOptPago()
+                }
             }
         }
     }
@@ -342,8 +348,12 @@ export default class ProductProvider extends Component {
                     'por arreglar',
                     'success'
                 )
-                this.asignarUsuario(json.data.token)
+                console.log(json.data.token)
+                //this.asignarUsuario(json.data.token)
                 this.toggleModalRegistro()
+                if(this.state.redirecPagoState){
+                    this.toggleModalOptPago()
+                }
 
             } else {
                 alert('no login')
@@ -388,11 +398,19 @@ export default class ProductProvider extends Component {
             return { modalOpen: false }
         })
     }
-    
+    ///////////////////////////////////
+    actualizarRedirectPago = () => {
+        this.setState({ redirecPagoState: !this.state.redirecPagoState})
+      }
+
      ///////////////////////////////////
      toggleModalOpciones = () => {
        this.setState({ modalOpcionState: !this.state.modalOpcionState})
      }
+     ///////////////////////////////////
+     toggleModalOptPago = () => {
+        this.setState({ ModalOptPagoState: !this.state.ModalOptPagoState})
+      }
    
     //////////////////////////////////////
     toggleModalnoRegistro = () => {
@@ -402,19 +420,34 @@ export default class ProductProvider extends Component {
     //////////////////////////////////////
     
     toggleModalLogin = () => {
-        this.setState({ modalLoginState: !this.state.modalLoginState})
+        this.setState({ modalLoginState: !this.state.modalLoginState,
+                        modalRegistroState: false,
+                        modalOpcionState: false
+        })
+          
     }
     ///////////////////////////////////
     toggleModalRegistro = () => {
-        this.setState({ modalRegistroState: !this.state.modalRegistroState})
+        this.setState({ modalRegistroState: !this.state.modalRegistroState,
+                        modalLoginState: false,
+                        modalOpcionState: false
+        })
     }
     ///////////////////////////////////////////////
     actualizarSesionState =() =>{
         
         if(this.state.pintarBtnBar){
-            this.setState({ pintarBtnBar: !this.state.pintarBtnBar})
+            this.setState({ pintarBtnBar: !this.state.pintarBtnBar,
+                            paypalState: true
+            })
+           
         }else{
-            this.setState({ pintarBtnBar: !this.state.pintarBtnBar},
+            this.setState({ pintarBtnBar: !this.state.pintarBtnBar,
+                            redirecPagoState: false,
+                            ModalOptPagoState: false,
+                            paypalState: false
+
+            },
             () => {
                 let tokenLocal = JSON.parse(localStorage.getItem('token'))
                 let nombre = tokenLocal.nombre
@@ -529,7 +562,7 @@ export default class ProductProvider extends Component {
         if (tokenLocal === null || tokenLocal.length ===0  ) {
             this.toggleModalOpciones()
         } else {
-            alert('comprar')
+            this.toggleModalOptPago()
         }
         // const carrito = localStorage.getItem('cart');
         // const cart = JSON.parse(carrito)
@@ -586,11 +619,15 @@ export default class ProductProvider extends Component {
                 modalNoRegistroState: this.state.modalNoRegistroState,
                 modalLoginState: this.state.modalLoginState,
                 modalRegistroState: this.state.modalRegistroState,
+                ModalOptPagoState: this.state.ModalOptPagoState,
                 toggleModalOpciones: this.toggleModalOpciones,
                 toggleModalBusqueda: this.toggleModalBusqueda,
                 toggleModalLogin: this.toggleModalLogin,
                 toggleModalnoRegistro: this.toggleModalnoRegistro,
                 toggleModalRegistro: this.toggleModalRegistro,
+                toggleModalOptPago: this.toggleModalOptPago,
+                actualizarRedirectPago: this.actualizarRedirectPago,
+                redirecPagoState: this.state.redirecPagoState, /////pendiente  por quiar
                 increment: this.increment,
                 decrement: this.decrement,
                 removeItem: this.removeItem,

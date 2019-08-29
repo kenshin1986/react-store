@@ -15,6 +15,7 @@ export default class FormIngreso extends Component {
     }
     this.props.login(datos);
   }
+  
  
   render() {
     return (
@@ -62,7 +63,9 @@ export default class FormIngreso extends Component {
                 </button>
                 <button className="btn  btn-dark btn-sm text-capitalize"
                           onClick={()=>{
-                            this.props.cerrar()}}>
+                            this.props.cerrar()
+                            this.props.actualizarRedirectPago()
+                            }}>
                   cancelar
                 </button>
               </form>

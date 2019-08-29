@@ -10,13 +10,16 @@ import Cart from './components/Cart/Cart'
 import Default from './components/Default/Default';
 import Home from './components/Home/Home'
 import Footer from './components/Footer/Footer';
+import Paypal from './components/Pagos/Paypal.jsx'
 import ModalSearch from './components/Modals/ModalSearch'
 import Modal from './components/Modals/Modal'
 import ModalLogin from './components/Modals/ModalLogin'
 import ModalRegistro from './components/Modals/ModalRegistro'
 import ModalNoRegistro from './components/Modals/ModalNoRegistro'
 import ModalOpcion from './components/Modals/ModalOpcion'
-import FormIngreso from './components/Formularios/FormIngreso'
+import ModalOptPago from './components/Modals/ModalOptPago'
+
+
 
 
 
@@ -29,11 +32,10 @@ class App extends Component {
          <Switch>
           <Route exact path="/" component={Home}/>
           <Route exact path="/productList" component={ProductList}/>
-          <Route exact path="/login" component={FormIngreso}/>
           <Route path="/details" component={Details}/>
           <Route path="/cart" component={Cart}/>
+          <Route path="/paypal" component={Paypal}/>
           <Route path="/agrupaciones/*" component={ProductList}/>
-          
           <Route  component={Default}/>
         </Switch> 
         <Footer/>
@@ -43,6 +45,7 @@ class App extends Component {
         <ModalRegistro/>
         <ModalOpcion/>
         <ModalNoRegistro/>
+        <ModalOptPago/>
         </BrowserRouter>
         
     );

@@ -86,7 +86,8 @@ export default class FormRegistro extends Component {
                                     </button>
                                     <button className="btn  btn-dark btn-sm text-capitalize"
                                               onClick={()=>{
-                                              this.props.cerrar()}}>
+                                              this.props.cerrar()
+                                              this.props.actualizarRedirectPago()}}>
                                             cancelar
                                     </button>
                                 </form>

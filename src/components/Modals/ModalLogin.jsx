@@ -9,7 +9,8 @@ import FormIngreso from '../Formularios/FormIngreso';
 export default class ModalLogin extends Component {
 
     render() {
-        const {modalLoginState, login, toggleModalLogin}= this.context;
+        const {modalLoginState, login,
+                toggleModalLogin, actualizarRedirectPago}= this.context;
        
         return (
                 !modalLoginState ?  null 
@@ -19,7 +20,8 @@ export default class ModalLogin extends Component {
                                     e.target.id === 'cont' ||
                                     e.target.id === 'fila'  ||
                                     e.target.id === 'modal'){ 
-                                toggleModalLogin();
+                                toggleModalLogin()
+                                actualizarRedirectPago()
                             }
                         }} >
                             <div className="container container-fluid" id="cont">
@@ -31,7 +33,9 @@ export default class ModalLogin extends Component {
                                                     text-capitalize p-5 mt-3">
                                                 <FormIngreso 
                                                   login={login}
-                                                 cerrar={toggleModalLogin} />
+                                                 cerrar={toggleModalLogin} 
+                                                 actualizarRedirectPago={actualizarRedirectPago}    
+                                                 />
                                     </div>
                                 </div>
                             </div>

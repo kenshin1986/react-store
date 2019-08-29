@@ -7,7 +7,7 @@ export default class ModalOpcion extends Component {
     render() {
         const { modalOpcionState, toggleModalRegistro, 
                 toggleModalOpciones, toggleModalLogin, 
-                toggleModalnoRegistro } = this.context;
+                toggleModalnoRegistro, actualizarRedirectPago } = this.context;
         return (
             !modalOpcionState ?  null 
             :  
@@ -16,7 +16,8 @@ export default class ModalOpcion extends Component {
                     if(  e.target.className === 'sc-bxivhb dhUoWh' ||
                             e.target.id === 'cont' ||
                             e.target.id === 'fila' ){ 
-                            toggleModalOpciones();
+                            toggleModalOpciones()
+                            actualizarRedirectPago()
                     }
                 }} >
                     <div className="container container-fluid" id="cont">
@@ -31,6 +32,7 @@ export default class ModalOpcion extends Component {
                                             onClick={()=>{
                                                 toggleModalLogin();
                                                 toggleModalOpciones()
+                                                actualizarRedirectPago()
                                          }}>
                                         Ingresar
                                     </a> 
@@ -38,16 +40,19 @@ export default class ModalOpcion extends Component {
                                 <div className="col-12 ">
                                     <a href="#top" className="btn btn-block btn-outline-light mb-3"
                                             onClick={()=>{
-                                                toggleModalRegistro();
+                                                toggleModalRegistro()
                                                 toggleModalOpciones()
+                                                actualizarRedirectPago()
                                                     }}>
                                             Registrarse 
                                     </a>  
                                 </div>
                                 <div className="col-12 ">
                                     <a href="#top" className="btn btn-block btn-outline-light mb-3" onClick={()=>{
-                                            toggleModalnoRegistro();
-                                            toggleModalOpciones()}}>
+                                            toggleModalnoRegistro()
+                                            toggleModalOpciones()
+                                            actualizarRedirectPago()
+                                            }}>
                                         Comprar Sin Registrarse
                                     </a> 
                                 </div>

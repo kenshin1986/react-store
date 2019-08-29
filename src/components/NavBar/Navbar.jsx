@@ -34,10 +34,12 @@ class Navbar extends Component {
                                 navbar-expand-md 
                                 mr-0 mt-0 ml-0 mb-0
                                 pr-0 pt-0 pl-0 pb-0
-                                fixed-top">
+                                fixed-top"
+                                
+                                >
                 <div className="row  
                                 mr-0 mt-0 ml-0 mb-0
-                                pr-0 pt-0 pl-0 pb-0">  
+                                pr-0 pt-0 pl-0 pb-0" >  
                     <div className="col-12 
                                     col-md-4 
                                     mr-0 mt-0 ml-0 mb-0
@@ -96,10 +98,10 @@ class Navbar extends Component {
                                 {
                                     pintarBtnBar ? 
                                     <React.Fragment>
-                                        <li className="nav-item">
+                                        <li className="nav-item" >
                                             <a    href="#top"  
                                                onClick={()=>{
-                                                        toggleModalLogin()}}>
+                                                        toggleModalLogin()}} >
                                                 Ingresar
                                             </a>
                                         </li>

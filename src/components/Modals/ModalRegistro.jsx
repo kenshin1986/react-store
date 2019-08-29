@@ -8,7 +8,8 @@ import FormRegistro from '../Formularios/FormRegistro';
 export default class ModalRegistro extends Component {
 
     render() {
-        const {modalRegistroState, registrar, toggleModalRegistro}= this.context;
+        const { modalRegistroState, registrar,
+                toggleModalRegistro, actualizarRedirectPago}= this.context;
         return (
 
             !modalRegistroState ?  null 
@@ -19,7 +20,8 @@ export default class ModalRegistro extends Component {
                                     e.target.id === 'cont' ||
                                     e.target.id === 'fila'  ||
                                     e.target.id === 'modal'){ 
-                                    toggleModalRegistro();
+                                    toggleModalRegistro()
+                                    actualizarRedirectPago()
                             }
                         }} >
                             <div className="container container-fluid" id="cont">
@@ -30,8 +32,9 @@ export default class ModalRegistro extends Component {
                                                     text-center text-capitalize 
                                                     p-5 mt-2">
                                     <FormRegistro
-                                        registrar={registrar}
-                                           cerrar={toggleModalRegistro} />
+                                                registrar={registrar}
+                                                   cerrar={toggleModalRegistro}
+                                    actualizarRedirectPago={actualizarRedirectPago}  />
                             </div>
                         </div>
                     </div>
