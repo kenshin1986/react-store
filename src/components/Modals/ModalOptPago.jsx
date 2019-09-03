@@ -3,10 +3,6 @@ import styled from 'styled-components';
 import { ProductContext } from '../Context';
 import { Link } from 'react-router-dom'
 
-import FormIngreso from '../Formularios/FormIngreso';
-
-
-
 export default class ModalOptPago extends Component {
 
     render() {

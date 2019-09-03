@@ -18,6 +18,7 @@ import ModalRegistro from './components/Modals/ModalRegistro'
 import ModalNoRegistro from './components/Modals/ModalNoRegistro'
 import ModalOpcion from './components/Modals/ModalOpcion'
 import ModalOptPago from './components/Modals/ModalOptPago'
+import Social from './components/Social/Social'
 
 
 
@@ -29,6 +30,7 @@ class App extends Component {
      
       <BrowserRouter>
         <Navbar />
+        <Social/>
          <Switch>
           <Route exact path="/" component={Home}/>
           <Route exact path="/productList" component={ProductList}/>

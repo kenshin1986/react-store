@@ -62,6 +62,7 @@ const ModalContainer = styled.div`
     bottom: 0;
     background: rgba(0, 0, 0, 0.3);
     display: flex;
+    z-index: 1000;
     aling-items:center;
     justify-content: center;
     #modal{
